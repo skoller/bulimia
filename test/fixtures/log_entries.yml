@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  day: 1
+  food: MyText
+  binge: false
+  vomit: false
+  laxative: false
+  personal_notes: MyText
+  time: MyString
+
+two:
+  day: 1
+  food: MyText
+  binge: false
+  vomit: false
+  laxative: false
+  personal_notes: MyText
+  time: MyString

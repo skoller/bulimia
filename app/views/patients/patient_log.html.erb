@@ -1,0 +1,36 @@
+<h1>Listing log_entries</h1>
+
+<table>
+  <tr>
+    <th>Day</th>
+    <th>Food</th>
+    <th>Binge</th>
+    <th>Vomit</th>
+    <th>Laxative</th>
+    <th>Personal notes</th>
+    <th>Time</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<%= @log_entries.each do |log_entry| %>
+  <tr>
+    <td><%= log_entry.day %></td>
+		<td><%= log_entry.time %></td>
+    <td><%= log_entry.food %></td>
+    <td><%= log_entry.binge %></td>
+    <td><%= log_entry.vomit %></td>
+    <td><%= log_entry.laxative %></td>
+    <td><%= log_entry.personal_notes %></td>
+    
+    <td><%= link_to 'Show', patient_log_entry %></td>
+    <td><%= link_to 'Edit', edit_patient_log_entry_path(log_entry) %></td>
+    <td><%= link_to 'Destroy', patient_log_entry, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Log entry', new_patient_log_entry_path(@patient) %>

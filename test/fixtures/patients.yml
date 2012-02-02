@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  dob: MyString
+  sex: MyString
+  diagnosis: 1.5
+
+two:
+  first_name: MyString
+  last_name: MyString
+  dob: MyString
+  sex: MyString
+  diagnosis: 1.5

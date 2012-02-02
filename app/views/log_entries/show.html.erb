@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Day:</b>
+  <%= @log_entry.day %>
+</p>
+
+<p>
+  <b>Food:</b>
+  <%= @log_entry.food %>
+</p>
+
+<p>
+  <b>Binge:</b>
+  <%= @log_entry.binge %>
+</p>
+
+<p>
+  <b>Vomit:</b>
+  <%= @log_entry.vomit %>
+</p>
+
+<p>
+  <b>Laxative:</b>
+  <%= @log_entry.laxative %>
+</p>
+
+<p>
+  <b>Personal notes:</b>
+  <%= @log_entry.personal_notes %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @log_entry.time %>
+</p>
+
+
+<%= link_to 'Edit', edit_patient_log_entry_path(@patient, @log_entry) %> |
+<%= link_to 'Save', patient_log_entries_path(@patient) %>

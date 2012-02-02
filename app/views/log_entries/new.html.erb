@@ -1,0 +1,52 @@
+<h1>New log_entry</h1>
+
+<%= form_for [ @patient, @log_entry ] do |f| %>
+  <% if @log_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@log_entry.errors.count, "error") %> prohibited this log_entry from being saved:</h2>
+
+      <ul>
+      <% @log_entry.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :day %><br />
+    <%= f.number_field :day %>
+  </div>
+	<div class="field">
+    <%= f.label :time %><br />
+    <%= f.text_field :time %>
+  </div>
+  <div class="field">
+    <%= f.label :food %><br />
+    <%= f.text_area :food %>
+  </div>
+  <div class="field">
+    <%= f.label :binge %><br />
+    <%= f.check_box :binge %>
+  </div>
+  <div class="field">
+    <%= f.label :vomit %><br />
+    <%= f.check_box :vomit %>
+  </div>
+  <div class="field">
+    <%= f.label :laxative %><br />
+    <%= f.check_box :laxative %>
+  </div>
+  <div class="field">
+    <%= f.label :personal_notes %><br />
+    <%= f.text_area :personal_notes %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+
+<%= link_to 'Back', patient_log_entries_path %>
