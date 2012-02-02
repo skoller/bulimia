@@ -4,7 +4,7 @@ Bulimia::Application.routes.draw do
     resources :log_entries
   end
   match 'phone/day' => "phone#day", :as => :day
-  end
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

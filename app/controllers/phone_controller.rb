@@ -32,7 +32,6 @@ class PhoneController < ApplicationController
     end
 
     def day_interpret
-      
-      
+      render BASE_DIR + 'cool.xml'
     end
   end
