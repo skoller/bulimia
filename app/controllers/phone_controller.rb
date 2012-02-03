@@ -29,7 +29,7 @@ class PhoneController < ApplicationController
       return false
     else
       @error = true
-      render BASE_DIR + 'try_again.xml' 
+      render BASE_DIR + 'try_again2.xml' 
       return false
     end
   end
