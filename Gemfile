@@ -1,12 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.0'
-
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-gem 'sqlite3'
-
+gem 'rails', '>=3.2'
+gem 'jquery-rails'
+gem 'heroku'
 gem 'prawn'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -15,8 +13,19 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-gem 'heroku'
+
+group :development do
+	gem 'sqlite3'
+end
+
+group :test do
+  # Pretty printed test output
+  gem 'turn', :require => false
+end
+
+group :production do
+	gem 'pg'
+end
 
 
 # To use ActiveModel has_secure_password
@@ -31,7 +40,4 @@ gem 'heroku'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
-end
+
