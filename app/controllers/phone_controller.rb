@@ -30,8 +30,9 @@ class PhoneController < ApplicationController
       render BASE_DIR +'try_again.xml' 
       return false
     end
-
-    def day_interpret
-      render BASE_DIR + 'cool.xml'
-    end
   end
+  
+  def day_interpret
+      render BASE_DIR + 'cool.xml'
+  end
+end
