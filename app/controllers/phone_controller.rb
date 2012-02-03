@@ -11,7 +11,7 @@ class PhoneController < ApplicationController
 
       if number_mod.size == 11
         processed_num = number_mod.slice!(1..10)
-        nubmer = processed_num
+        number = processed_num
       elsif number_mod.size == 10
         processed_num = number_mod.slice!(0..9)
         number = processed_num
@@ -21,7 +21,7 @@ class PhoneController < ApplicationController
       return false
     end
 
-    @texter = Patient.where(:phone_number => "3108090426")
+    @texter = Patient.where(:phone_number => number)
 
     if @texter.exists?
       session[:ph] = number
