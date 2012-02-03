@@ -1,35 +1,37 @@
 <h2>Listing patients</h2>
 
 <table class="table table-bordered table-striped">
-  <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Dob</th>
-    <th>Sex</th>
-    <th>Diagnosis</th>
-	<th>Phone Number</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @patients.each do |patient| %>
-  <tr>
-    <td><%= patient.first_name %></td>
-    <td><%= patient.last_name %></td>
-    <td><%= patient.dob %></td>
-    <td><%= patient.sex %></td>
-    <td><%= patient.diagnosis %></td>
-	<td><%= patient.phone_number %></td>
-    <td><%= link_to 'Show', patient %></td>
-    <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
-    <td><%= link_to 'Destroy', patient, confirm: 'Are you sure?', method: :delete %></td>
-	<td><%= link_to 'Log', patient_log_entries_path(patient) %></td>
-  </tr>
-<% end %>
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Dob</th>
+      <th>Sex</th>
+      <th>Diagnosis</th>
+  	  <th>Phone Number</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+<tbody>
+  <% @patients.each do |patient| %>
+    <tr>
+      <td><%= patient.first_name %></td>
+      <td><%= patient.last_name %></td>
+      <td><%= patient.dob %></td>
+      <td><%= patient.sex %></td>
+      <td><%= patient.diagnosis %></td>
+    	<td><%= patient.phone_number %></td>
+      <td><%= link_to 'Show', patient %></td>
+      <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
+      <td><%= link_to 'Destroy', patient, confirm: 'Are you sure?', method: :delete %></td>
+    	<td><%= link_to 'Log', patient_log_entries_path(patient) %></td>
+    </tr>
+  <% end %>
+</tbody>
 </table>
-
-<br />
 
 <div class="form-actions">
     <%= link_to new_patient_path do %>

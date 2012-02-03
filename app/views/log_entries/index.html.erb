@@ -40,10 +40,21 @@
           <% end %>
       </td>
       <td><%= log_entry.personal_notes %></td>
-      
-      <td><%= link_to 'Show', patient_log_entry_path(@patient, log_entry) %></td>
-      <td><%= link_to 'Edit', edit_patient_log_entry_path(@patient, log_entry) %></td>
-      <td><%= link_to 'Destroy', patient_log_entry_path(@patient, log_entry), confirm: 'Are you sure?', method: :delete %></td>
+        <td>    
+        <%= link_to patient_log_entry_path(@patient, log_entry) do %>
+          <button class="btn">View</button>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to edit_patient_log_entry_path(@patient, log_entry)  do %>
+          <button class="btn">Edit</button>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to patient_log_entry_path(@patient, log_entry), confirm: 'Are you sure?', method: :delete  do %>
+          <button class="btn btn-danger">Delete</button>
+        <% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>
@@ -52,7 +63,7 @@
 </table>
 <div class="form-actions">
   <%= link_to patients_path do %>
-      <button class="btn">&lt;&lt; Return to Patient Index</button>
+      <button class="btn">&lt;&lt; Return to Patient Listing</button>
   <% end %>
   <%= link_to patient_log_entries_path(@patient, format: "pdf") do %>
       <button class="btn">Generate Printable Log (PDF)</button>
