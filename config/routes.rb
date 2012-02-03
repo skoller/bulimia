@@ -5,6 +5,8 @@ Bulimia::Application.routes.draw do
   end
   match 'phone/day' => "phone#day", :as => :day
   match 'phone/day_interpret' => "phone#day_interpret", :as => :day_interpret
+  match 'phone/number_problem' => "phone#number_problem", :as => :number_problem
+  match 'phone/try_again2' => "phone#try_again2", :as => :try_again2
 
   
   # The priority is based upon order of creation:
