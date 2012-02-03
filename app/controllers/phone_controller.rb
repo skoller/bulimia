@@ -3,7 +3,7 @@ class PhoneController < ApplicationController
   BASE_DIR = "phone/"  
 
   def day
-
+    
     number = params['From']
     number_mod = number.tr('+-/)/(', '')
 
@@ -21,7 +21,7 @@ class PhoneController < ApplicationController
       return false
     end
 
-    @texter = @patient.where(:phone_number => number).first
+    @texter = Patient.where(:phone_number => number).first
 
     if @texter
       session[:ph] = number
