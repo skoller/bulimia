@@ -1,13 +1,13 @@
-<h1>Listing patients</h1>
+<h2>Listing patients</h2>
 
-<table>
+<table class="table table-bordered table-striped">
   <tr>
     <th>First name</th>
     <th>Last name</th>
     <th>Dob</th>
     <th>Sex</th>
     <th>Diagnosis</th>
-		<th>Phone Number</th>
+	<th>Phone Number</th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,15 +20,19 @@
     <td><%= patient.dob %></td>
     <td><%= patient.sex %></td>
     <td><%= patient.diagnosis %></td>
-		<td><%= patient.phone_number %></td>
+	<td><%= patient.phone_number %></td>
     <td><%= link_to 'Show', patient %></td>
     <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
     <td><%= link_to 'Destroy', patient, confirm: 'Are you sure?', method: :delete %></td>
-		<td><%= link_to 'Log', patient_log_entries_path(patient) %></td>
+	<td><%= link_to 'Log', patient_log_entries_path(patient) %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Patient', new_patient_path %>
+<div class="form-actions">
+    <%= link_to new_patient_path do %>
+        <button class="btn">Create New Patient</button>
+    <% end %>
+</div>
