@@ -17,7 +17,7 @@ class PhoneController < ApplicationController
         number = processed_num
       end
     else
-      render BASE_DIR + "try_again.xml"
+      render BASE_DIR + "number_problem.xml"
       return false
     end
 
