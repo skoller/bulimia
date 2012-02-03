@@ -2,7 +2,7 @@ class PhoneController < ApplicationController
   
   BASE_DIR = "phone/"  
 
-  def day
+  def sms_handler
     
     number = params['From']
     # session[:ph] = number
