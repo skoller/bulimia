@@ -1,41 +1,23 @@
-<h2>Patient Info</h2>
-<p id="notice"><%= notice %></p>
+<h2>Log Entry Details</h2>
+<br />
+<table class="table table-bordered table-striped">
+  <tr><th>Day</th><td><%= @log_entry.day %></td></tr>
+  <tr><th>Time</th><td><%= @log_entry.time %></td></tr>
+  <tr><th class="food">Food</th><td><%= @log_entry.food %></td></tr>
+  <tr><th>Binge</th><td><%= @log_entry.binge ? "X" : "" %></tr>
+  <tr><th>Vomit</th><td><%= @log_entry.vomit ? "X" : ""%></tr>
+  <tr><th>Laxative</th><td><%= @log_entry.laxative ? "X" : "" %></td></tr>
+  <th>Personal notes</th><td><%= @log_entry.personal_notes %></td></tr>
+</table>
 
-<p>
-  <label>Day:</label>
-  <%= @log_entry.day %>
-</p>
-
-<p>
-  <b>Food:</b>
-  <%= @log_entry.food %>
-</p>
-
-<p>
-  <b>Binge:</b>
-  <%= @log_entry.binge %>
-</p>
-
-<p>
-  <b>Vomit:</b>
-  <%= @log_entry.vomit %>
-</p>
-
-<p>
-  <b>Laxative:</b>
-  <%= @log_entry.laxative %>
-</p>
-
-<p>
-  <b>Personal notes:</b>
-  <%= @log_entry.personal_notes %>
-</p>
-
-<p>
-  <b>Time:</b>
-  <%= @log_entry.time %>
-</p>
-
-
-<%= link_to 'Edit', edit_patient_log_entry_path(@patient, @log_entry) %> |
-<%= link_to 'Save', patient_log_entries_path(@patient) %>
+<div class="form-actions">
+  <%= link_to patients_path do %>
+    <button class="btn">&lt;&lt; Return to Log</button>
+  <% end %>
+  <%= link_to edit_patient_log_entry_path(@patient, @log_entry)  do %>
+    <button class="btn">Edit this entry</button>
+  <% end %>
+  <%= link_to patient_log_entry_path(@patient, @log_entry), confirm: 'Are you sure?', method: :delete  do %>
+    <button class="btn btn-danger">Delete this entry</button>
+  <% end %>
+</div>
