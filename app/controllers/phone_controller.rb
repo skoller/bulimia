@@ -7,7 +7,7 @@ class PhoneController < ApplicationController
     number = params['From']
     # session[:ph] = number
     
-    if session[:day] == true && session[:ph] = number
+    if session[:day] == true && session[:text_convo] = true
       #####
     end
     
@@ -48,6 +48,7 @@ class PhoneController < ApplicationController
 
     if @texter.exists?
       session[:day] = true
+      session[:text_convo] = true
       @patient = @texter.first
       render BASE_DIR + 'day.xml'
       return false

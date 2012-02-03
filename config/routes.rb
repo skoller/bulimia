@@ -3,7 +3,7 @@ Bulimia::Application.routes.draw do
   resources :patients do
     resources :log_entries
   end
-  match 'sms_handler' => "phone#sms_handler", :as => :sms_handler
+  match 'phone/sms_handler' => "phone#sms_handler", :as => :sms_handler
   match 'phone/day' => "phone#day", :as => :day
   match 'phone/day_interpret' => "phone#day_interpret", :as => :day_interpret
   match 'phone/number_problem' => "phone#number_problem", :as => :number_problem
