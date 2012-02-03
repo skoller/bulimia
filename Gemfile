@@ -4,7 +4,7 @@ gem 'rails', "~>3.2"
 gem 'jquery-rails'
 gem 'heroku'
 gem 'prawn'
-gem 'twilio-ruby'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -26,6 +26,7 @@ end
 
 group :production do
 	gem 'pg'
+	gem 'twilio-ruby'
 end
 
 
