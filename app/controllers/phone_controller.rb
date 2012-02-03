@@ -5,10 +5,33 @@ class PhoneController < ApplicationController
   def day
     
     number = params['From']
+    # session[:ph] = number
+    
+    if session[:day] == true && session[:ph] = number
+      #####
+    end
+    
+    if session[:time] == true
+      #####
+    end
+    
+    if session[:food] == true
+      #####
+    end
+    
+    if session[:bvl] == true
+      #####
+    end
+    
+    if session[:note] == true
+      #####
+    end
+    
+    ######################## First incoming text #############################
+    
     number_mod = number.tr('+-/)/(', '')
 
     if ( number_mod =~ /^1\d(10)/ ) || ( number_mod =~ /^\d(10)/ )
-
       if number_mod.size == 11
         processed_num = number_mod.slice!(1..10)
         number = processed_num
@@ -24,7 +47,7 @@ class PhoneController < ApplicationController
     @texter = Patient.where(:phone_number => number)
 
     if @texter.exists?
-      session[:ph] = number
+      session[:day] = true
       @patient = @texter.first
       render BASE_DIR + 'day.xml'
       return false
