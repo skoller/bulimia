@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202201851) do
+ActiveRecord::Schema.define(:version => 20120203145456) do
 
   create_table "log_entries", :force => true do |t|
     t.integer  "day"
@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(:version => 20120202201851) do
     t.boolean  "laxative"
     t.text     "personal_notes"
     t.string   "time"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "patient_id"
+    t.datetime "date"
   end
 
   add_index "log_entries", ["patient_id"], :name => "index_log_entries_on_patient_id"
@@ -34,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20120202201851) do
     t.string   "dob"
     t.string   "sex"
     t.float    "diagnosis"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "phone_number"
   end
 
