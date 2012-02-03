@@ -7,7 +7,7 @@ class PhoneController < ApplicationController
     number = params['From']
     
         
-               if session[:day] == true && session[:text_convo] = true
+               if session[:day] == true && session[:text_convo] == true
                  render BASE_DIR + 'cool.xml'
                  return false
                  # if params['Body'] = "t"
@@ -27,19 +27,19 @@ class PhoneController < ApplicationController
                  #                  end
                end
                
-               if session[:time] == true && session[:text_convo] = true
+               if session[:time] == true && session[:text_convo] == true
                  #####
                end
                
-               if session[:food] == true && session[:text_convo] = true
+               if session[:food] == true && session[:text_convo] == true
                  #####
                end
                
-               if session[:bvl] == true && session[:text_convo] = true
+               if session[:bvl] == true && session[:text_convo] == true
                  #####
                end
                
-               if session[:note] == true && session[:text_convo] = true
+               if session[:note] == true && session[:text_convo] == true
                  #####
                end
     
