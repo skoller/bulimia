@@ -67,6 +67,7 @@ GEM
     pdf-reader (1.0.0)
       Ascii85 (~> 1.0.0)
       ruby-rc4
+    pg (0.12.2)
     polyglot (0.3.3)
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
@@ -132,8 +133,9 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   heroku
   jquery-rails
+  pg
   prawn
-  rails (= 3.2.0)
+  rails (~> 3.1)
   sass-rails (~> 3.2.3)
   sqlite3
   turn
