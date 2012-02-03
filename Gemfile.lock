@@ -135,7 +135,7 @@ DEPENDENCIES
   jquery-rails
   pg
   prawn
-  rails (~> 3.1)
+  rails (~> 3.2)
   sass-rails (~> 3.2.3)
   sqlite3
   turn
