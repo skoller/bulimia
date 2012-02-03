@@ -15,7 +15,7 @@ class PhoneController < ApplicationController
         number = entry
       end
     else
-      render "phone/error xml text"
+      render "#"
       return false
     end
   
