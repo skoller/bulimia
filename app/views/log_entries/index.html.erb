@@ -1,52 +1,55 @@
 <h1>Eating Behavior Log</h1>
-
-<table>
-  <tr>
-    <th>Day</th>
-		<th>Time</th>
-    <th>Food</th>
-    <th>Binge</th>
-    <th>Vomit</th>
-    <th>Laxative</th>
-    <th>Personal notes</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @log_entries.each do |log_entry| %>
-  <tr>
-    <td><%= log_entry.day %></td>
-		<td><%= log_entry.time %></td>
-    <td><%= log_entry.food %></td>
-    <td><% if log_entry.binge == true %>
-				<%= "X" %>
-				<% else %>
-				<%= " " %>
-				<% end %>
-	  </td>
-    <td><% if log_entry.vomit == true %>
-				<%= "X" %>
-				<% else %>
-				<%= " " %>
-				<% end %>
-	  </td>
-    <td><% if log_entry.laxative == true %>
-				<%= "X" %>
-				<% else%>
-				<%= " " %>
-				<% end %>
-	  </td>
-    <td><%= log_entry.personal_notes %></td>
-    
-    <td><%= link_to 'Show', patient_log_entry_path(@patient, log_entry) %></td>
-    <td><%= link_to 'Edit', edit_patient_log_entry_path(@patient, log_entry) %></td>
-    <td><%= link_to 'Destroy', patient_log_entry_path(@patient, log_entry), confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
 <br />
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Time</th>
+      <th class="food">Food</th>
+      <th>Binge</th>
+      <th>Vomit</th>
+      <th>Laxative</th>
+      <th>Personal notes</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @log_entries.each do |log_entry| %>
+    <tr>
+      <td><%= log_entry.day %></td>
+      <td><%= log_entry.time %></td>
+      <td><%= log_entry.food %></td>
+      <td><% if log_entry.binge == true %>
+          <%= "X" %>
+          <% else %>
+          <%= " " %>
+          <% end %>
+      </td>
+      <td><% if log_entry.vomit == true %>
+          <%= "X" %>
+          <% else %>
+          <%= " " %>
+          <% end %>
+      </td>
+      <td><% if log_entry.laxative == true %>
+          <%= "X" %>
+          <% else%>
+          <%= " " %>
+          <% end %>
+      </td>
+      <td><%= log_entry.personal_notes %></td>
+      
+      <td><%= link_to 'Show', patient_log_entry_path(@patient, log_entry) %></td>
+      <td><%= link_to 'Edit', edit_patient_log_entry_path(@patient, log_entry) %></td>
+      <td><%= link_to 'Destroy', patient_log_entry_path(@patient, log_entry), confirm: 'Are you sure?', method: :delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
+
+
+</table>
 
 <p><%= link_to 'New Log entry', new_patient_log_entry_path(@patient) %> </br>
 <%= link_to 'Return to Patient Index', patients_path %></p>

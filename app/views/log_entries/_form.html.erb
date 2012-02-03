@@ -1,4 +1,5 @@
-<%= form_for [ @patient, @log_entry ] do |f| %>
+<%= form_for [@patient, @log_entry], :html => {:class => "form-horizontal" } do |f| %>
+  <legend>Edit Log Entry</legend>
   <% if @log_entry.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@log_entry.errors.count, "error") %> prohibited this log_entry from being saved:</h2>
@@ -11,36 +12,60 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :day %><br />
-    <%= f.number_field :day %>
+  <div class="control-group">
+    <%= f.label :day, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.number_field :day %>
+    </div>
   </div>
-	<div class="field">
-    <%= f.label :time %><br />
-    <%= f.text_field :time %>
+
+  <div class="control-group">
+    <%= f.label :time, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.text_field :time %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :food %><br />
-    <%= f.text_area :food %>
+
+  <div class="control-group">
+    <%= f.label :food, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.text_area :food, :rows => 10  %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :binge %><br />
-    <%= f.check_box :binge %>
+
+  <div class="control-group">
+    <%= f.label :binge, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.check_box :binge %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :vomit %><br />
-    <%= f.check_box :vomit %>
+
+  <div class="control-group">
+    <%= f.label :vomit, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.check_box :vomit %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :laxative %><br />
-    <%= f.check_box :laxative %>
+
+  <div class="control-group">
+    <%= f.label :laxative, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.check_box :laxative %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :personal_notes %><br />
-    <%= f.text_area :personal_notes %>
+
+    <div class="control-group">
+    <%= f.label :personal_notes, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.text_area :personal_notes, :rows => 10 %>
+    </div>
   </div>
   
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.button "Save Changes to Log Entry", :class => "btn btn-primary" %>
+    <%= link_to patient_log_entries_path do %>
+      <button class="btn">Go Back</button>
+    <% end %>
   </div>
+
 <% end %>

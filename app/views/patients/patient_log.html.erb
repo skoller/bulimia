@@ -1,6 +1,6 @@
 <h1>Listing log_entries</h1>
-
-<table>
+<br />
+<table class="table table-bordered table-striped">
   <tr>
     <th>Day</th>
     <th>Food</th>
@@ -17,7 +17,7 @@
 <%= @log_entries.each do |log_entry| %>
   <tr>
     <td><%= log_entry.day %></td>
-		<td><%= log_entry.time %></td>
+    <td><%= log_entry.time %></td>
     <td><%= log_entry.food %></td>
     <td><%= log_entry.binge %></td>
     <td><%= log_entry.vomit %></td>
