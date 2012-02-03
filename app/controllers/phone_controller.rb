@@ -25,6 +25,7 @@ class PhoneController < ApplicationController
 
     if @texter.exists?
       session[:ph] = number
+      @patient = @texter.first
       render BASE_DIR + 'day.xml'
       return false
     else
