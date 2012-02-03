@@ -1,4 +1,4 @@
 xml.instruct!
 xml.Response do 
-  xml.Sms("Hi. Is this entry about today's events?")
+  xml.Sms("Hi David. This shit kicks ass. no?")
 end
