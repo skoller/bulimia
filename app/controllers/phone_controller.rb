@@ -21,7 +21,7 @@ class PhoneController < ApplicationController
       return false
     end
 
-    @texter = Patient.where(:phone_number => number)
+    @texter = Patient.where(:phone_number => "3108090426")
 
     if @texter.exists?
       session[:ph] = number
