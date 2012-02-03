@@ -21,9 +21,9 @@ class PhoneController < ApplicationController
       return false
     end
 
-    @texter = Patient.where(:phone_number => number).first
+    @texter = Patient.where(:phone_number => number)
 
-    if @texter
+    if @texter.exists?
       session[:ph] = number
       render BASE_DIR + 'day.xml'
       return false
