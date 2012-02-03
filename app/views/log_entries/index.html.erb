@@ -1,4 +1,4 @@
-<h1>Eating Behavior Log</h1>
+<h2>Eating Behavior Log</h2>
 <br />
 <table class="table table-bordered table-striped">
   <thead>
@@ -50,7 +50,14 @@
 
 
 </table>
-
-<p><%= link_to 'New Log entry', new_patient_log_entry_path(@patient) %> </br>
-<%= link_to 'Return to Patient Index', patients_path %></p>
-<p><%= link_to "Printable Log (PDF)", patient_log_entries_path(@patient, format: "pdf") %></p>
+<div class="form-actions">
+  <%= link_to patients_path do %>
+      <button class="btn">&lt;&lt; Return to Patient Index</button>
+  <% end %>
+  <%= link_to patient_log_entries_path(@patient, format: "pdf") do %>
+      <button class="btn">Generate Printable Log (PDF)</button>
+  <% end %>
+  <%= link_to new_patient_log_entry_path(@patient)  do %>
+      <button class="btn">Create New Entry</button>
+  <% end %>
+</div>

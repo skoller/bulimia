@@ -64,7 +64,7 @@
   <div class="form-actions">
     <%= f.button "Save Changes to Log Entry", :class => "btn btn-primary" %>
     <%= link_to patient_log_entries_path do %>
-      <button class="btn">Go Back</button>
+      <button href="<%= patient_log_entries_path %>" class="btn" method="get">Go Back</button>
     <% end %>
   </div>
 
