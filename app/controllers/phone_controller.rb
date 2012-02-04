@@ -17,7 +17,7 @@ class PhoneController < ApplicationController
           return false
         end
     
-    if @ch 
+    if  session[:bla]
       
       
     else
@@ -34,7 +34,7 @@ class PhoneController < ApplicationController
       @le.save(:validate => :false)
       @ch.log_entry_id = @le.id
       @ch.save(:validate => :false)
-      session[:sms_convo] = params['From']
+      
       render BASE_DIR + "cool.xml"
     end
     
