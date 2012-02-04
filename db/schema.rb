@@ -39,7 +39,8 @@ ActiveRecord::Schema.define(:version => 20120204001643) do
   end
 
   add_index "log_entries", ["patient_id"], :name => "index_log_entries_on_patient_id"
-
+  
+  
   create_table "patients", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"

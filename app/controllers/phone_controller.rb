@@ -12,20 +12,30 @@ class PhoneController < ApplicationController
       elsif number_mod.size == 10
         @processed_num = number_mod.slice(0..9)
       end
+      @patient = Patient.where(:phone_number => @processed_num).first
     else
       render BASE_DIR + "number_problem.xml"
       return false
     end
-
-    if  session[:bla]
+    
+    
+    if @patient.convo_handler.state == 'day'
+      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+      
+    elsif @ch.state == 'food'
+      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+    elsif @ch.state == 'bvl'
+      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+    elsif @ch.state == 'note'
+      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
 
 
     else
 
-      if @patient = Patient.where(:phone_number => @processed_num).first
+      if @patient
         @ch = ConvoHandler.new
         @ch.patient_id = @patient.id
-        @ch.state = 'start'
+        @ch.state = 'day'
         @ch.save(:validate => :false)
         @le = LogEntry.new
         @le.patient_id = @patient.id
