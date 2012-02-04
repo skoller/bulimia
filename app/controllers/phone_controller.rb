@@ -23,11 +23,11 @@ class PhoneController < ApplicationController
     else
 
       if @patient = Patient.where(:phone_number => @processed_num).first
-        @ch = ConvoHandler.build
+        @ch = ConvoHandler.new
         @ch.patient_id = @patient.id
         @ch.state = 'start'
         @ch.save(:validate => :false)
-        @le = LogEntry.build
+        @le = LogEntry.new
         @le.patient_id = @patient.id
         @le.food = "THIS IS A TEST"
         @le.save(:validate => :false)
