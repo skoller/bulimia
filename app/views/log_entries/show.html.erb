@@ -11,11 +11,11 @@
 </table>
 
 <div class="form-actions">
-  <%= link_to patients_path do %>
+  <%= link_to patient_log_entries_path @patient do %>
     <button class="btn">&lt;&lt; Return to Log</button>
   <% end %>
   <%= link_to edit_patient_log_entry_path(@patient, @log_entry)  do %>
-    <button class="btn">Edit this entry</button>
+    <button class="btn btn-warning">Edit this Log Entry</button>
   <% end %>
   <%= link_to patient_log_entry_path(@patient, @log_entry), confirm: 'Are you sure?', method: :delete  do %>
     <button class="btn btn-danger">Delete this entry</button>

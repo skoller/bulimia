@@ -40,14 +40,14 @@
           <% end %>
       </td>
       <td><%= log_entry.personal_notes %></td>
-        <td>    
+      <td>    
         <%= link_to patient_log_entry_path(@patient, log_entry) do %>
           <button class="btn">View</button>
         <% end %>
       </td>
       <td>
         <%= link_to edit_patient_log_entry_path(@patient, log_entry)  do %>
-          <button class="btn">Edit</button>
+          <button class="btn btn-warning">Edit</button>
         <% end %>
       </td>
       <td>
