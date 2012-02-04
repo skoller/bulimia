@@ -1,34 +1,22 @@
-<p id="notice"><%= notice %></p>
+<h2>Patient Details</h2>
+<br />
+<table class="table table-bordered table-striped">
+  <tr><th>First Name</th><td><%= @patient.first_name  %></td></tr>
+  <tr><th>Last Name</th><td><%= @patient.last_name %></td></tr>
+  <tr><th>Date of Birth</th><td><%= @patient.dob %></td></tr>
+  <tr><th>Sex</th><td><%= @patient.sex %></tr>
+  <tr><th>Diagnosis</th><td><%= @patient.diagnosis %></tr>
+  <tr><th>Phone Number</th><td><%= @patient.phone_number %></td></tr>
+</table>
 
-<p>
-  <b>First name:</b>
-  <%= @patient.first_name %>
-</p>
-
-<p>
-  <b>Last name:</b>
-  <%= @patient.last_name %>
-</p>
-
-<p>
-  <b>Dob:</b>
-  <%= @patient.dob %>
-</p>
-
-<p>
-  <b>Sex:</b>
-  <%= @patient.sex %>
-</p>
-
-<p>
-  <b>Diagnosis:</b>
-  <%= @patient.diagnosis %>
-</p>
-
-<p>
-  <b>Phone Number:</b>
-  <%= @patient.phone_number %>
-</p>
-
-<%= link_to 'Edit', edit_patient_path(@patient) %> |
-<%= link_to 'Back', patients_path %>
+<div class="form-actions">
+  <%= link_to patients_path do %>
+    <button class="btn">&lt;&lt; Return to Patients Listing</button>
+  <% end %>
+  <%= link_to edit_patient_path(@patient)  do %>
+    <button class="btn btn-warning">Edit this Patient</button>
+  <% end %>
+  <%= link_to patient_path(@patient), confirm: 'Are you sure?', method: :delete  do %>
+    <button class="btn btn-danger">Delete this entry</button>
+  <% end %>
+</div>

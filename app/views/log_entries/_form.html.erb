@@ -1,5 +1,5 @@
 <%= form_for [@patient, @log_entry], :html => {:class => "form-horizontal" } do |f| %>
-  <legend>Edit Log Entry</legend>
+  <legend><%= mode == :edit ? "Edit" : "New" %> Log Entry</legend>
   <% if @log_entry.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@log_entry.errors.count, "error") %> prohibited this log_entry from being saved:</h2>
@@ -62,9 +62,10 @@
   </div>
   
   <div class="form-actions">
-    <%= f.button "Save Changes to Log Entry", :class => "btn btn-primary" %>
-    <%= link_to patient_log_entries_path do %>
-      <button href="<%= patient_log_entries_path %>" class="btn" method="get">Go Back</button>
+    <% mode == :edit ? button_text = "Save Changes to Log Entry" : button_text = "Save Log Entry" %>
+    <%= f.button button_text, :class => "btn btn-primary" %>
+    <%= link_to patient_log_entries_path @patient do %>
+      <button class="btn" method="get">Go Back</button>
     <% end %>
   </div>
 

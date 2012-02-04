@@ -24,10 +24,26 @@
       <td><%= patient.sex %></td>
       <td><%= patient.diagnosis %></td>
     	<td><%= patient.phone_number %></td>
-      <td><%= link_to 'Show', patient %></td>
-      <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
-      <td><%= link_to 'Destroy', patient, confirm: 'Are you sure?', method: :delete %></td>
-    	<td><%= link_to 'Log', patient_log_entries_path(patient) %></td>
+      <td>    
+        <%= link_to patient_path(patient) do %>
+          <button class="btn">View Patient</button>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to edit_patient_path(patient) do %>
+          <button class="btn btn-warning">Edit Patient</button>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to patient_path(patient), confirm: 'Are you sure?', method: :delete  do %>
+          <button class="btn btn-danger">Delete Patient</button>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to patient_log_entries_path(patient) do %>
+          <button class="btn btn-info">View Log</button>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </tbody>
