@@ -8,9 +8,9 @@ class PhoneController < ApplicationController
 
     if ( number_mod =~ /^1\d(10)/ ) || ( number_mod =~ /^\d(10)/ )
       if number_mod.size == 11
-        @processed_num = number_mod.slice!(1..10)
+        @processed_num = number_mod.slice(1..10)
       elsif number_mod.size == 10
-        @processed_num = number_mod.slice!(0..9)
+        @processed_num = number_mod.slice(0..9)
       end
     else
       render BASE_DIR + "number_problem.xml"
@@ -48,4 +48,4 @@ class PhoneController < ApplicationController
   
   
   
-  
+end  
