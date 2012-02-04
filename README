@@ -1,3 +1,90 @@
 This app kicks some serious rear end. I hope it can enhance the treatment of patients struggling with bulimia.
 
 -btw the world would be better off without cedar
+
+
+#   sms_handler
+#     @patient = Patient.where(:phone_number => params['From']).first
+#     
+#     
+#     if @patient.convo_handler.state == 'start'
+#       convo_start
+#     elsif @patient.convo_handler.state == 'day'
+#       convo_day
+#     elsif @patient.convo_handler.state == 'bvl'
+#       convo_bvl
+#     elsif @patient.convo_handler.state == 'time'
+#       convo_time
+#     elsif @patient.convo_handler.state == 'note'
+#       convo_time
+#     elsif @patient.convo_handler.state == 'food'
+#       convo_food
+#     else
+#       convo_error
+#     end
+#   end 
+# 
+#   def sms_handler
+#     ######################## First incoming text #############################
+#   
+# 
+#     @texter = Patient.where(:phone_number => number)
+# 
+#     if @texter.exists?
+#       # session[:day] = true
+#       #       session[:text_convo] = true
+#       session[:sms_convo] = number
+#       @patient = @texter.first
+#       render BASE_DIR + 'day.xml'
+#       return false
+#     else
+#       @error = true
+#       render BASE_DIR + 'try_again2.xml' 
+#       return false
+#     end
+#   end
+#   
+#   def day_interpret
+#       render BASE_DIR + 'cool.xml'
+#   end
+# end
+# 
+# 
+# 
+# 
+# 
+# 
+
+     # if session[:day]
+     #               if params['Body'] = "t"
+     #                                                  @pt = Patient.where(:phone_number => session[:ph])
+     #                                                  @sms_log_entr = @pt.log_entries.build
+     #                                                  @sms_log_entry.day = 16
+     #                                                  @sms_log_entry.date = Date.now
+     #                                                  @sms_log_entry.save(:validate => :false)
+     #                                                  session[:day] = :false
+     #                                                  return false
+     #                                                elsif params['Body'] = "x"
+     #                                                  @pateint = Patient.where(:phone_number => session[:ph])
+     #                                                else
+     #                                                  @error_day = true
+     #                                                  render BASE_DIR + "day.xml"
+     #                                                  return false
+     #                                                end
+     #             end
+     #             
+     #             if session[:time]
+     #               #####
+     #             end
+     #             
+     #             if session[:food]
+     #               #####
+     #             end
+     #             
+     #             if session[:bvl]
+     #               #####
+     #             end
+     #             
+     #             if session[:note]
+     #               #####
+     #             end
