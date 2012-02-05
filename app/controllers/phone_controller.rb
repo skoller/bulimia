@@ -2,43 +2,135 @@ class PhoneController < ApplicationController
   
   BASE_DIR = "phone/" 
   
-  def convo_handler_state_changer
+  def sms_handler
+    
+    ######### number / patient identification
     raw_number = params['From']
     number_mod = raw_number.tr('+-/)/(', '')
 
     if ( number_mod =~ /^1\d(10)/ ) || ( number_mod =~ /^\d(10)/ )
+      
       if number_mod.size == 11
         @processed_num = number_mod.slice(1..10)
       elsif number_mod.size == 10
         @processed_num = number_mod.slice(0..9)
       end
-      @patient = Patient.where(:phone_number => @processed_num).first
+      
+      if Patient.where(:phone_number => @processed_num).exists?
+       @patient = Patient.where(:phone_number => @processed_num).first
+      else
+        @error = "number_problem"
+        render BASE_DIR + "error.xml"
+        return false
+      end
+      
     else
-      render BASE_DIR + "number_problem.xml"
+      @error = "number_problem"
+      render BASE_DIR + "error.xml"
       return false
     end
     
     
+    
+    # conversation intiation code at the end of the method
+    # arranged in order of conversation sequence timeline
+    
+    ########## day
     if @patient.convo_handler.state == 'day'
       @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
-      if params['Body'] == "t" || params['Body'] == "T"
+      @ch = @patient.convo_handler.state
+      if ( (params['Body']).delete!(" ") == "t" ) || ( (params['Body']).delete!(" ") == "T" )
         @log_e.date = DateTime.now 
-        @log_e.day = DateTime.now ###########write method to calc
         @log_e.save(:validate => :false)
-      elsif params['Body'] == "x" || params['Body'] == "X"
+        @log_e.day = @patient.determine_log_entry_day_index(@log_e)
+        @log_e.save(:validate => :false)
+        @ch.state = 'food'
+        @ch.save(:validate => :false)
+        render BASE_DIR + "food.xml"
+        return false
+      elsif ( (params['Body']).delete!(" ") == "x" ) || ( (params['Body']).delete!(" ") == "X" )
         @log_e.date = DateTime.yesterday 
-        @log_e.save(:validate => :false)       
+        @log_e.save(:validate => :false)
+        @ch.state = 'food'
+        @ch.save(:validate => :false)
+        render BASE_DIR + "food.xml"
+        return false
+      else 
+        @error = "day_error"
+        render BASE_DIR + "error.xml"
+        return false    
       end
-    elsif @ch.state == 'food'
-      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
-    elsif @ch.state == 'bvl'
-      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
-    elsif @ch.state == 'note'
-      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
-
-
+         
+    ########## food 
+    elsif @patient.convo_handler.state == 'food'
+      @ch = @patient.convo_handler.state
+      unless (params["Body"]).delete!(" ") == ""
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        @log_e.food = (params['Body']).squeeze!(" ")
+        @log_e.save(:validate => :false)
+        @ch.state = 'time'
+        @ch.save(:validate => :false)
+        render BASE_DIR + "time.xml"
+        return false
+      else
+        @error = "food_blank"
+        render BASE_DIR + "error.xml"
+        return false
+      end
+      
+    ########## time
+    elsif @patient.convo_handler.state == 'time'
+      @ch = @patient.convo_handler.state
+      unless (params["Body"]).delete!(" ") == ""
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        @log_e.time = (params['Body']).squeeze!(" ")
+        @log_e.save(:validate => :false)
+        @ch.state = 'bvl'
+        @ch.save(:validate => :false)
+        render BASE_DIR + "bvl.xml"
+        return false
+      else
+        @error = "time_blank"
+        render BASE_DIR + "error.xml"
+        return false
+      end
+    
+    ########### bvl  
+    elsif @patient.convo_handler.state == 'bvl'
+      @ch = @patient.convo_handler.state
+      unless (params["Body"]).delete!(" ") == ""
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        binge_in_body(@log_e) #### these methods save the gathered info to the database
+        vomit_in_body(@log_e)
+        lax_in_body(@log_e)
+        nothing_happened(@log_e)
+        @ch.state = 'note'
+        @ch.save(:validate => :false)
+        render BASE_DIR + "notes.xml"
+        return false
+      else
+        @error = "bvl_blank"
+        render BASE_DIR + "error.xml"
+        return false
+      end  
+    
+    ########### personal_notes 
+    elsif @patient.convo_handler.state == 'note'
+      @ch = @patient.convo_handler.state
+      unless (params["Body"]).delete!(" ") == ""
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        @log_e.personal_notes = (params['Body']).squeeze!(" ")
+        @log_e.save(:validate => :false)
+        render BASE_DIR + "thank_you.xml"
+        return false
+      else
+        @error = "personal_notes_blank"
+        render BASE_DIR + "error.xml"
+        return false
+      end
+      
+    ########### convo initiation  
     else
-
       if @patient
         @ch = ConvoHandler.new
         @ch.patient_id = @patient.id
@@ -47,29 +139,57 @@ class PhoneController < ApplicationController
         @le = LogEntry.new
         @le.patient_id = @patient.id
         @le.convo_handler_id = @patient.convo_handler.id
-        @le.food = "THIS IS A TEST"
         @le.save(:validate => :false)
         @ch.log_entry_id = @le.id
         @ch.save(:validate => :false)
+        render BASE_DIR + "food.xml"
+        return false
       else
-        render BASE_DIR + "number_problem.xml"
+        @error = "number_problem"
+        render BASE_DIR + "error.xml"
         return false
       end
-      render BASE_DIR + "cool.xml"
     end
 
   end
-
+  
+  
+  
+  
+  ######### bvl sub-methods
+  def binge_in_body(entry)
+    if (params['Body']).downcase!.include? ?b
+      entry.binge = true
+      entry.save(:validate => :false)
+    end
+  end
+  
+  def vomit_in_body(entry)
+    if (params['Body']).downcase!.include? ?v
+      entry.vomit = true
+      entry.save(:validate => :false)
+    end
+  end
+  
+  def lax_in_body(entry)
+    if (params['Body']).downcase!.include? ?l
+      entry.laxative = true
+      entry.save(:validate => :false)
+    end
+  end
+    
+  def nothing_happened(entry)
+    if (params['Body']).downcase!.delete!(" ") == "x"
+      entry.laxative = false
+      entry.binge = false
+      entry.vomit = false
+      entry.save(:validate => :false)
+    end
+  end
+  
+  
+  
+  
   
 end  
-
-
-
-def tx_day_calculator(datetime_obj, patient)
-  first_day = patient.log_entries.order("date ASC").first
-  first_day.day ##### not finished
- 
-end
-
-
 
