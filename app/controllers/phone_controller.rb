@@ -67,6 +67,9 @@ class PhoneController < ApplicationController
         elsif (params['Body']).downcase.delete(" ") == "help"
           render BASE_DIR + "help.xml"
           return false
+        elsif (params['Body']).downcase.delete(" ") == "cancel"
+          render BASE_DIR + "cancel.xml"
+          return false
         else
           @error = "intro_error"
           render BASE_DIR + "error.xml"
