@@ -19,13 +19,13 @@ class PhoneController < ApplicationController
       if Patient.where(:phone_number => @processed_num).exists?
        @patient = Patient.where(:phone_number => @processed_num).first
       else
-        @error = "number_problem"
+        @error = "number_problem_1"
         render BASE_DIR + "error.xml"
         return false
       end
       
     else
-      @error = "number_problem"
+      @error = "number_problem_2"
       render BASE_DIR + "error.xml"
       return false
     end
@@ -84,11 +84,26 @@ class PhoneController < ApplicationController
       unless (params["Body"]).delete!(" ") == ""
         @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
         @log_e.time = (params['Body']).squeeze!(" ")
-        @log_e.save(:validate => :false)
-        @ch.state = 'bvl'
-        @ch.save(:validate => :false)
-        render BASE_DIR + "bvl.xml"
-        return false
+        if (params['body']).downcase!.delete!(" ").include? "am"
+          @log_e.save(:validate => :false)
+          @ch.state = 'bvl'
+          @ch.save(:validate => :false)
+          @am_established = true
+          render BASE_DIR + "bvl.xml"
+          return false
+        end
+        if ( !@am_established ) && ( (params['body']).downcase!.delete!(" ").include? "pm" )
+          @log_e.save(:validate => :false)
+          @ch.state = 'bvl'
+          @ch.save(:validate => :false)
+          render BASE_DIR + "bvl.xml"
+          return false
+        else
+          @error = "time_missing_am_pm"
+          render BASE_DIR + "error.xml"
+          return false
+        end
+        
       else
         @error = "time_blank"
         render BASE_DIR + "error.xml"
@@ -142,7 +157,7 @@ class PhoneController < ApplicationController
         @le.save(:validate => :false)
         @ch.log_entry_id = @le.id
         @ch.save(:validate => :false)
-        render BASE_DIR + "food.xml"
+        render BASE_DIR + "day.xml"
         return false
       else
         @error = "number_problem"
