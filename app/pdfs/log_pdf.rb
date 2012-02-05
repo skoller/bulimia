@@ -4,7 +4,7 @@ class LogPdf < Prawn::Document
       super(top_margin: 50)
         @patient = patient
         patient_info 
-        entries  
+        entries
     end
     
     def patient_info
@@ -23,9 +23,9 @@ class LogPdf < Prawn::Document
       end
 
       def entry_rows
-        [["Day", "Time", "Food", "Binge", "Vomit", "Laxative", "Personal Notes"]] +
+        [["Day", "Time", "Where", "Food", "Binge", "Vomit", "Laxative", "Personal Notes"]] +
         @patient.log_entries.map do |entry|
-          [entry.day, entry.time, entry.food, b_v_l(entry.binge), b_v_l(entry.vomit), b_v_l(entry.laxative), entry.personal_notes]
+          [entry.day, entry.time, entry.location, entry.food, b_v_l(entry.binge), b_v_l(entry.vomit), b_v_l(entry.laxative), entry.personal_notes]
         end
       end
 

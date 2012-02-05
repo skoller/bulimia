@@ -3,6 +3,7 @@
 <table class="table table-bordered table-striped">
   <tr><th>Day</th><td><%= @log_entry.day %></td></tr>
   <tr><th>Time</th><td><%= @log_entry.time %></td></tr>
+	<tr><th>Where</th><td><%= @log_entry.location %></td></tr>
   <tr><th class="food">Food</th><td><%= @log_entry.food %></td></tr>
   <tr><th>Binge</th><td><%= @log_entry.binge ? "X" : "" %></tr>
   <tr><th>Vomit</th><td><%= @log_entry.vomit ? "X" : ""%></tr>

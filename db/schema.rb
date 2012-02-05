@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120205063116) do
+ActiveRecord::Schema.define(:version => 20120205154449) do
 
   create_table "convo_handlers", :force => true do |t|
     t.string   "state"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20120205063116) do
     t.integer  "patient_id"
     t.datetime "date"
     t.integer  "convo_handler_id"
+    t.text     "location"
   end
 
   add_index "log_entries", ["convo_handler_id"], :name => "index_log_entries_on_convo_handler_id"

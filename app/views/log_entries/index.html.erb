@@ -5,6 +5,7 @@
     <tr>
       <th>Day</th>
       <th>Time</th>
+			<th>Where</th>
       <th class="food">Food</th>
       <th>Binge</th>
       <th>Vomit</th>
@@ -20,6 +21,7 @@
     <tr>
       <td><%= log_entry.day %></td>
       <td><%= log_entry.time %></td>
+			<td><%= log_entry.location %></td>
       <td><%= log_entry.food %></td>
       <td><% if log_entry.binge == true %>
           <%= "X" %>
