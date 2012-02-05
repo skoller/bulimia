@@ -38,7 +38,7 @@ class PhoneController < ApplicationController
     ########## day
     if @patient.convo_handler.state == 'day'
       @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-      @ch = @patient.convo_handler.state
+      @ch = @patient.convo_handler
       if (params['Body']).downcase.delete(" ") == "t"
         @log_e.date = DateTime.now 
         @log_e.save(:validate => :false)
@@ -63,7 +63,7 @@ class PhoneController < ApplicationController
          
     ########## food 
     elsif @patient.convo_handler.state == 'food'
-      @ch = @patient.convo_handler.state
+      @ch = @patient.convo_handler
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         @log_e.food = (params['Body']).squeeze!(" ")
@@ -80,7 +80,7 @@ class PhoneController < ApplicationController
       
     ########## time
     elsif @patient.convo_handler.state == 'time'
-      @ch = @patient.convo_handler.state
+      @ch = @patient.convo_handler
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         @log_e.time = (params['Body']).squeeze!(" ")
@@ -112,7 +112,7 @@ class PhoneController < ApplicationController
     
     ########### bvl  
     elsif @patient.convo_handler.state == 'bvl'
-      @ch = @patient.convo_handler.state
+      @ch = @patient.convo_handler
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         binge_in_body(@log_e) #### these methods save the gathered info to the database
@@ -131,12 +131,13 @@ class PhoneController < ApplicationController
     
     ########### personal_notes 
     elsif @patient.convo_handler.state == 'note'
-      @ch = @patient.convo_handler.state
+      @ch = @patient.convo_handler
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         @log_e.personal_notes = (params['Body']).squeeze!(" ")
         @log_e.save(:validate => :false)
         render BASE_DIR + "thank_you.xml"
+        @ch.drop_it_like_its_hot
         return false
       else
         @error = "personal_notes_blank"
