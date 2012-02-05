@@ -39,7 +39,7 @@ class PhoneController < ApplicationController
     if @patient.convo_handler.state == 'day'
       @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
       @ch = @patient.convo_handler.state
-      if ( (params['Body']).delete!(" ") == "t" ) # || ( (params['Body']).delete!(" ") == "T" )
+      if (params['Body']).downcase!.delete!(" ") == "t"
         @log_e.date = DateTime.now 
         @log_e.save(:validate => :false)
         @log_e.day = @patient.determine_log_entry_day_index(@log_e)
@@ -48,7 +48,7 @@ class PhoneController < ApplicationController
         @ch.save(:validate => :false)
         render BASE_DIR + "food.xml"
         return false
-      elsif ( (params['Body']).delete!(" ") == "x" ) # || ( (params['Body']).delete!(" ") == "X" )
+      elsif (params['Body']).downcase!.delete!(" ") == "x"
         @log_e.date = DateTime.yesterday 
         @log_e.save(:validate => :false)
         @ch.state = 'food'
