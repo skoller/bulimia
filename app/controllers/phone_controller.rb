@@ -39,7 +39,7 @@ class PhoneController < ApplicationController
     if @patient.convo_handler.state == 'day'
       @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
       @ch = @patient.convo_handler.state
-      if (params['Body']).downcase.delete!(" ") == "t"
+      if (params['Body']).downcase.delete(" ") == "t"
         @log_e.date = DateTime.now 
         @log_e.save(:validate => :false)
         @log_e.day = @patient.determine_log_entry_day_index(@log_e)
@@ -48,11 +48,11 @@ class PhoneController < ApplicationController
         @ch.save(:validate => :false)
         render BASE_DIR + "food.xml"
         return false
-      elsif (params['Body']).downcase.delete!(" ") == "x"
+      elsif (params['Body']).downcase.delete(" ") == "x"
         @log_e.date = DateTime.yesterday 
         @log_e.save(:validate => :false)
         @ch.state = 'food'
-        @ch.save(:validate => :false)
+        @ch.save(:validate => :false)delete
         render BASE_DIR + "food.xml"
         return false
       else 
@@ -64,7 +64,7 @@ class PhoneController < ApplicationController
     ########## food 
     elsif @patient.convo_handler.state == 'food'
       @ch = @patient.convo_handler.state
-      unless (params["Body"]).delete!(" ") == ""
+      unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
         @log_e.food = (params['Body']).squeeze!(" ")
         @log_e.save(:validate => :false)
@@ -81,10 +81,10 @@ class PhoneController < ApplicationController
     ########## time
     elsif @patient.convo_handler.state == 'time'
       @ch = @patient.convo_handler.state
-      unless (params["Body"]).delete!(" ") == ""
+      unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
         @log_e.time = (params['Body']).squeeze!(" ")
-        if (params['body']).downcase.delete!(" ").include? "am"
+        if (params['body']).downcase.delete(" ").include? "am"
           @log_e.save(:validate => :false)
           @ch.state = 'bvl'
           @ch.save(:validate => :false)
@@ -92,7 +92,7 @@ class PhoneController < ApplicationController
           render BASE_DIR + "bvl.xml"
           return false
         end
-        if ( !@am_established ) && ( (params['body']).downcase!.delete!(" ").include? "pm" )
+        if ( !@am_established ) && ( (params['body']).downcase.delete(" ").include? "pm" )
           @log_e.save(:validate => :false)
           @ch.state = 'bvl'
           @ch.save(:validate => :false)
@@ -113,7 +113,7 @@ class PhoneController < ApplicationController
     ########### bvl  
     elsif @patient.convo_handler.state == 'bvl'
       @ch = @patient.convo_handler.state
-      unless (params["Body"]).delete!(" ") == ""
+      unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
         binge_in_body(@log_e) #### these methods save the gathered info to the database
         vomit_in_body(@log_e)
@@ -132,7 +132,7 @@ class PhoneController < ApplicationController
     ########### personal_notes 
     elsif @patient.convo_handler.state == 'note'
       @ch = @patient.convo_handler.state
-      unless (params["Body"]).delete!(" ") == ""
+      unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
         @log_e.personal_notes = (params['Body']).squeeze!(" ")
         @log_e.save(:validate => :false)
@@ -173,28 +173,28 @@ class PhoneController < ApplicationController
   
   ######### bvl sub-methods
   def binge_in_body(entry)
-    if (params['Body']).downcase!.include? ?b
+    if (params['Body']).downcase.include? ?b
       entry.binge = true
       entry.save(:validate => :false)
     end
   end
   
   def vomit_in_body(entry)
-    if (params['Body']).downcase!.include? ?v
+    if (params['Body']).downcase.include? ?v
       entry.vomit = true
       entry.save(:validate => :false)
     end
   end
   
   def lax_in_body(entry)
-    if (params['Body']).downcase!.include? ?l
+    if (params['Body']).downcase.include? ?l
       entry.laxative = true
       entry.save(:validate => :false)
     end
   end
     
   def nothing_happened(entry)
-    if (params['Body']).downcase!.delete!(" ") == "x"
+    if (params['Body']).downcase.delete(" ") == "x"
       entry.laxative = false
       entry.binge = false
       entry.vomit = false
