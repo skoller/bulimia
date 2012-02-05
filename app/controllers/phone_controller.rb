@@ -102,8 +102,8 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        @log_e.time = (params['Body']).squeeze!(" ")
         if (params['Body']).downcase.delete(" ").include? "am"
+          @log_e.time = (params['Body']).squeeze(" ")
           @log_e.save(:validate => :false)
           @ch.state = 'bvl'
           @ch.save(:validate => :false)
@@ -112,6 +112,7 @@ class PhoneController < ApplicationController
           return false
         end
         if ( !@am_established ) && ( (params['Body']).downcase.delete(" ").include? "pm" )
+          @log_e.time = (params['Body']).squeeze(" ")
           @log_e.save(:validate => :false)
           @ch.state = 'bvl'
           @ch.save(:validate => :false)
