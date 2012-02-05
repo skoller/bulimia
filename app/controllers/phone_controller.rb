@@ -95,10 +95,10 @@ class PhoneController < ApplicationController
         render BASE_DIR + "food.xml"
         return false
       elsif (params['Body']).downcase.delete(" ") == "cancel"
-        render BASE_DIR + "cancel.xml"
         @ch.drop_it_like_its_hot
         @log_e.drop_it
-        return false 
+        render BASE_DIR + "cancel.xml"
+        return false
       else 
         @error = "day_error"
         render BASE_DIR + "error.xml"
@@ -110,9 +110,9 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       if (params['Body']).downcase.delete(" ") == "cancel"
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        render BASE_DIR + "cancel.xml"
         @ch.drop_it_like_its_hot
         @log_e.drop_it
+        render BASE_DIR + "cancel.xml"
         return false
       end
       unless (params["Body"]).delete(" ") == ""
@@ -134,9 +134,9 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       if (params['Body']).downcase.delete(" ") == "cancel"
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        render BASE_DIR + "cancel.xml"
         @ch.drop_it_like_its_hot
         @log_e.drop_it
+        render BASE_DIR + "cancel.xml"
         return false
       end
       unless (params["Body"]).delete(" ") == ""
@@ -159,9 +159,9 @@ class PhoneController < ApplicationController
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         if (params['Body']).downcase.delete(" ") == "cancel"
-          render BASE_DIR + "cancel.xml"
           @ch.drop_it_like_its_hot
           @log_e.drop_it
+          render BASE_DIR + "cancel.xml"
           return false
         end
         if (params['Body']).downcase.delete(" ").include? "am"
@@ -197,9 +197,9 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       if (params['Body']).downcase.delete(" ") == "cancel"
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        render BASE_DIR + "cancel.xml"
         @ch.drop_it_like_its_hot
         @log_e.drop_it
+        render BASE_DIR + "cancel.xml"
         return false
       end
       unless (params["Body"]).delete(" ") == ""
@@ -223,9 +223,9 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       if (params['Body']).downcase.delete(" ") == "cancel"
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        render BASE_DIR + "cancel.xml"
         @ch.drop_it_like_its_hot
         @log_e.drop_it
+        render BASE_DIR + "cancel.xml"
         return false
       end
       unless (params["Body"]).delete(" ") == ""
@@ -266,9 +266,9 @@ class PhoneController < ApplicationController
          render BASE_DIR + "lax_time.xml"
          return false
        elsif (params['Body']).downcase.delete(" ") == "cancel"
-         render BASE_DIR + "cancel.xml"
          @ch.drop_it_like_its_hot
          @log_e.drop_it
+         render BASE_DIR + "cancel.xml"
          return false
        else 
          @error = "lax_day_error"
@@ -281,9 +281,9 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       if (params['Body']).downcase.delete(" ") == "cancel"
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        render BASE_DIR + "cancel.xml"
         @ch.drop_it_like_its_hot
         @log_e.drop_it
+        render BASE_DIR + "cancel.xml"
         return false
       end
       unless (params["Body"]).delete(" ") == ""
@@ -321,9 +321,9 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       if (params['Body']).downcase.delete(" ") == "cancel"
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        render BASE_DIR + "cancel.xml"
         @ch.drop_it_like_its_hot
         @log_e.drop_it
+        render BASE_DIR + "cancel.xml"
         return false
       end
       unless (params["Body"]).delete(" ") == ""
