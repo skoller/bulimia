@@ -52,7 +52,7 @@ class PhoneController < ApplicationController
         @log_e.date = DateTime.yesterday 
         @log_e.save(:validate => :false)
         @ch.state = 'food'
-        @ch.save(:validate => :false)delete
+        @ch.save(:validate => :false)
         render BASE_DIR + "food.xml"
         return false
       else 
