@@ -37,7 +37,7 @@ class PhoneController < ApplicationController
     
     ########## day
     if @patient.convo_handler.state == 'day'
-      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+      @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id).first
       @ch = @patient.convo_handler.state
       if (params['Body']).downcase.delete(" ") == "t"
         @log_e.date = DateTime.now 
@@ -65,7 +65,7 @@ class PhoneController < ApplicationController
     elsif @patient.convo_handler.state == 'food'
       @ch = @patient.convo_handler.state
       unless (params["Body"]).delete(" ") == ""
-        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id).first
         @log_e.food = (params['Body']).squeeze!(" ")
         @log_e.save(:validate => :false)
         @ch.state = 'time'
@@ -82,7 +82,7 @@ class PhoneController < ApplicationController
     elsif @patient.convo_handler.state == 'time'
       @ch = @patient.convo_handler.state
       unless (params["Body"]).delete(" ") == ""
-        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id).first
         @log_e.time = (params['Body']).squeeze!(" ")
         if (params['body']).downcase.delete(" ").include? "am"
           @log_e.save(:validate => :false)
@@ -114,7 +114,7 @@ class PhoneController < ApplicationController
     elsif @patient.convo_handler.state == 'bvl'
       @ch = @patient.convo_handler.state
       unless (params["Body"]).delete(" ") == ""
-        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id).first
         binge_in_body(@log_e) #### these methods save the gathered info to the database
         vomit_in_body(@log_e)
         lax_in_body(@log_e)
@@ -133,7 +133,7 @@ class PhoneController < ApplicationController
     elsif @patient.convo_handler.state == 'note'
       @ch = @patient.convo_handler.state
       unless (params["Body"]).delete(" ") == ""
-        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id )
+        @log_e = LogEntry.where(:convo_handler_id => @patient.convo_handler.id).first
         @log_e.personal_notes = (params['Body']).squeeze!(" ")
         @log_e.save(:validate => :false)
         render BASE_DIR + "thank_you.xml"
