@@ -2,7 +2,7 @@ class PhoneController < ApplicationController
   
   BASE_DIR = "phone/" 
   
-  def sms_handle
+  def sms_handler
     
     ######### number / patient identification
     raw_number = params['From']

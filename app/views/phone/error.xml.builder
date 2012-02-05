@@ -8,7 +8,7 @@ xml.Response do
  
   elsif @error == "day_error"
     xml.Sms("There was a problem with your response. Please try again.")
-    
+    xml.Sms("this is a test")
   elsif @error == "food_blank"
     xml.Sms("Your text cannot be blank. Please try again.")
    
@@ -28,5 +28,4 @@ xml.Response do
     xml.Sms("Something went wrong! Please contact tech support at XXX-XXX-XXXX")
   end
   
-  xml.Redirect("http://bvl.herokuapp.com/phone/sms_handler")
 end
