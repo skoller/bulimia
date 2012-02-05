@@ -64,6 +64,9 @@ class PhoneController < ApplicationController
           @ch.save(:validate => :false)
           render BASE_DIR + "lax_date.xml"
           return false 
+        elsif (params['Body']).downcase.delete(" ") == "help"
+          render BASE_DIR + "help.xml"
+          return false
         else
           @error = "intro_error"
           render BASE_DIR + "error.xml"
@@ -119,10 +122,6 @@ class PhoneController < ApplicationController
         @ch.state = 'where'
         @ch.save(:validate => :false)
         render BASE_DIR + "where.xml"
-        return false
-      if (params['Body']).downcase.delete(" ") == "cancel"
-        render BASE_DIR + "cancel.xml"
-        @ch.drop_it_like_its_hot
         return false
       else
         @error = "food_blank"
