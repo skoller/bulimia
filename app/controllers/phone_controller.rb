@@ -48,6 +48,7 @@ class PhoneController < ApplicationController
         @le.save(:validate => :false)
         @le.patient_id = @patient.id
         @le.convo_handler_id = @patient.convo_handler.id
+        @le.personal_notes = "TESTING!!!"
         @le.save(:validate => :false)
         @ch.log_entry_id = @le.id
         @ch.save(:validate => :false)
