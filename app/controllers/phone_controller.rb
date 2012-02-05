@@ -140,7 +140,7 @@ class PhoneController < ApplicationController
         nothing_happened(@log_e)
         @ch.state = 'note'
         @ch.save(:validate => :false)
-        render BASE_DIR + "notes.xml"
+        render BASE_DIR + "note.xml"
         return false
       else
         @error = "bvl_blank"
