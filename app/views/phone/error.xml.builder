@@ -23,6 +23,8 @@ xml.Response do
   elsif @error == "personal_notes_blank"
     xml.Sms("Your text cannot be blank. Please try again. Text details about your thoughts/feelings or the circumstances of this eating event.")
   
+  elsif @error == "convo_handler_state_undefined"
+    xml.Sms("convo handler state is either nil or unintentianally modified")
   else
     xml.Sms("Something went wrong! Please contact tech support at XXX-XXX-XXXX")
   end

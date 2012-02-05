@@ -32,9 +32,27 @@ class PhoneController < ApplicationController
     
     
     
-    # conversation intiation code at the end of the method
+   
     # arranged in order of conversation sequence timeline
     
+    
+    unless @patient.convo_handler
+      
+        ######## conversation initiation
+        @ch = ConvoHandler.new
+        @ch.patient_id = @patient.id
+        @ch.state = 'day'
+        @ch.save(:validate => :false)
+        @le = LogEntry.new
+        @le.patient_id = @patient.id
+        @le.convo_handler_id = @patient.convo_handler.id
+        @le.save(:validate => :false)
+        @ch.log_entry_id = @le.id
+        @ch.save(:validate => :false)
+        render BASE_DIR + "day.xml"
+        return false
+      
+    else  
     ########## day
     if @patient.convo_handler.state == 'day'
       @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
@@ -145,30 +163,15 @@ class PhoneController < ApplicationController
         return false
       end
       
-    ########### convo initiation  
+    ########### convo_handler state is messed up  
     else
-      if @patient
-        @ch = ConvoHandler.new
-        @ch.patient_id = @patient.id
-        @ch.state = 'day'
-        @ch.save(:validate => :false)
-        @le = LogEntry.new
-        @le.patient_id = @patient.id
-        @le.convo_handler_id = @patient.convo_handler.id
-        @le.save(:validate => :false)
-        @ch.log_entry_id = @le.id
-        @ch.save(:validate => :false)
-        render BASE_DIR + "day.xml"
-        return false
-      else
-        @error = "number_problem"
-        render BASE_DIR + "error.xml"
-        return false
-      end
+      @error = "convo_handler_state_undefined"
+      render BASE_DIR + "error.xml"
+      return false
     end
-
+   end
   end
-  
+
   
   
   
