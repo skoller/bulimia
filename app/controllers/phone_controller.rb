@@ -85,7 +85,7 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        @log_e.food = (params['Body']).squeeze!(" ")
+        @log_e.food = (params['Body']).squeeze(" ")
         @log_e.save(:validate => :false)
         @ch.state = 'time'
         @ch.save(:validate => :false)
@@ -154,7 +154,7 @@ class PhoneController < ApplicationController
       @ch = @patient.convo_handler
       unless (params["Body"]).delete(" ") == ""
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-        @log_e.personal_notes = (params['Body']).squeeze!(" ")
+        @log_e.personal_notes = (params['Body']).squeeze(" ")
         @log_e.save(:validate => :false)
         render BASE_DIR + "thank_you.xml"
         @ch.drop_it_like_its_hot
