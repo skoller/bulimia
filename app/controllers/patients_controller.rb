@@ -1,12 +1,8 @@
 class PatientsController < ApplicationController
  
   def index
-    @patients = Patient.all
-  end
-  
-  def patient_log
-    @patient = Patient.find(params[:id])
-    @log_entries = @patient.log_entries
+    @pt = Patient.all
+    @patients = @pt.sort_by { |pt| pt.last_name.downcase }
   end
 
   def show
