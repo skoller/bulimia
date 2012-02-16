@@ -10,6 +10,13 @@
 <body>
 <div class="container">
 	<h1>BVL</h1>
+	<% if current_physician %>
+		<p>You are signed in as <%= current_physician.email %></p></br>
+		<%= link_to "Log Out", log_out_path, method: :delete %>
+	<% elsif @no_session_format %>
+	<% else %>
+		<%= link_to "Log In", log_in_path %>
+	<% end %>
 	<%= yield %>
 </div>
 </body>

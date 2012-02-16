@@ -2,6 +2,7 @@ class PhysiciansController < ApplicationController
   
   def new
     @physician = Physician.new
+    @no_session_format = true
   end
   
   def create

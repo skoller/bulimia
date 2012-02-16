@@ -1,5 +1,7 @@
 class LogEntriesController < ApplicationController
  
+  before_filter :authenticate_physician
+  
   def index
     @ph = Physician.find(params[:physician_id])
     @patient = @ph.patients.find(params[:patient_id])

@@ -1,4 +1,6 @@
 class PatientsController < ApplicationController
+  
+  before_filter :authenticate_physician
  
   def index
     @ph = Physician.find(params[:physician_id])
