@@ -1,6 +1,6 @@
 Bulimia::Application.routes.draw do
   
-  root :to => 'physicians#index'
+  root :to => 'application#home_page'
   resources :physicians do
     resources :patients do
       resources :log_entries
@@ -12,6 +12,7 @@ Bulimia::Application.routes.draw do
   match "matched" => "sessions#create", :as => "matched"
   match "sign_up" => "physicians#new", :as => "sign_up"
   match "home_page" => "application#home_page", :as => "home_page"
+  match "admin" => "admin#index", :as => "admin"
   # match 'phone/day' => "phone#sms_handler", :as => :day
   #   match 'phone/food' => "phone#sms_handler", :as => :food
   #   match 'phone/time' => "phone#sms_handler", :as => :time

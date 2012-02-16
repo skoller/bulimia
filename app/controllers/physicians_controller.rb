@@ -14,8 +14,4 @@ class PhysiciansController < ApplicationController
     end
   end
   
-  def index
-    @physicians = Physician.all
-  end
-  
 end
