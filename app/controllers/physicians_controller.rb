@@ -8,7 +8,7 @@ class PhysiciansController < ApplicationController
   def create
     @physician = Physician.new(params[:physician])
     if @physician.save
-      redirect_to root_url, :notice => "Signed Up!"
+      redirect_to matched_path(params[:physician])
     else
       render 'new'
     end
