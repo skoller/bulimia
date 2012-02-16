@@ -43,17 +43,17 @@
       </td>
       <td><%= log_entry.personal_notes %></td>
       <td>    
-        <%= link_to patient_log_entry_path(@patient, log_entry) do %>
+        <%= link_to physician_patient_log_entry_path(@ph, @patient, log_entry) do %>
           <button class="btn">View</button>
         <% end %>
       </td>
       <td>
-        <%= link_to edit_patient_log_entry_path(@patient, log_entry)  do %>
+        <%= link_to edit_physician_patient_log_entry_path(@ph, @patient, log_entry)  do %>
           <button class="btn btn-warning">Edit</button>
         <% end %>
       </td>
       <td>
-        <%= link_to patient_log_entry_path(@patient, log_entry), confirm: 'Are you sure?', method: :delete  do %>
+        <%= link_to physician_patient_log_entry_path(@ph, @patient, log_entry), confirm: 'Are you sure?', method: :delete  do %>
           <button class="btn btn-danger">Delete</button>
         <% end %>
       </td>
@@ -64,13 +64,13 @@
 
 </table>
 <div class="form-actions">
-  <%= link_to patients_path do %>
+  <%= link_to physician_patients_path(@ph) do %>
       <button class="btn">&lt;&lt; Return to Patient Listing</button>
   <% end %>
-  <%= link_to patient_log_entries_path(@patient, format: "pdf") do %>
+  <%= link_to physician_patient_log_entries_path(@ph, @patient, format: "pdf") do %>
       <button class="btn">Generate Printable Log (PDF)</button>
   <% end %>
-  <%= link_to new_patient_log_entry_path(@patient)  do %>
+  <%= link_to new_physician_patient_log_entry_path(@ph, @patient)  do %>
       <button class="btn">Create New Entry</button>
   <% end %>
 </div>

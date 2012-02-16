@@ -1,6 +1,7 @@
 class Patient < ActiveRecord::Base
   has_many :log_entries
   has_one :convo_handler
+  has_one :physician
 
   def base_date
   	unless @base_date

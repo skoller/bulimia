@@ -1,5 +1,5 @@
 
-<%= form_for [@patient], :html => {:class => "form-horizontal" } do |f| %>
+<%= form_for [@ph, @patient], :html => {:class => "form-horizontal" } do |f| %>
   <legend><%= mode == :edit ? "Edit" : "New" %> Patient</legend>
   <% if @patient.errors.any? %>
     <div id="error_explanation">
@@ -58,7 +58,7 @@
   <div class="form-actions">
     <% mode == :edit ? button_text = "Save Changes to Patient" : button_text = "Save Patient" %>
     <%= f.button button_text, :class => "btn btn-primary" %>
-    <%= link_to patients_path do %>
+    <%= link_to physician_patients_path(@ph) do %>
       <button class="btn" method="get">Go Back</button>
     <% end %>
   </div>

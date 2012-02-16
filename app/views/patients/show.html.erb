@@ -10,13 +10,13 @@
 </table>
 
 <div class="form-actions">
-  <%= link_to patients_path do %>
+  <%= link_to physician_patients_path(@ph) do %>
     <button class="btn">&lt;&lt; Return to Patients Listing</button>
   <% end %>
-  <%= link_to edit_patient_path(@patient)  do %>
+  <%= link_to edit_physician_patient_path(@ph, @patient)  do %>
     <button class="btn btn-warning">Edit this Patient</button>
   <% end %>
-  <%= link_to patient_path(@patient), confirm: 'Are you sure?', method: :delete  do %>
+  <%= link_to physician_patient_path(@ph, @patient), confirm: 'Are you sure?', method: :delete  do %>
     <button class="btn btn-danger">Delete this entry</button>
   <% end %>
 </div>

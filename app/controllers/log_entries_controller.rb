@@ -1,7 +1,8 @@
 class LogEntriesController < ApplicationController
  
   def index
-    @patient = Patient.find(params[:patient_id])
+    @ph = Physician.find(params[:physician_id])
+    @patient = @ph.patients.find(params[:patient_id])
     @log_entries = @patient.log_entries
     respond_to do |format|
         format.html
@@ -16,46 +17,52 @@ class LogEntriesController < ApplicationController
   end
 
   def show
-    @patient = Patient.find(params[:patient_id])
+    @ph = Physician.find(params[:physician_id])
+    @patient = @ph.patients.find(params[:patient_id])
     @log_entry = @patient.log_entries.find(params[:id])
   end
 
   def new
-    @patient = Patient.find(params[:patient_id])
-    @log_entry = LogEntry.new
+    @ph = Physician.find(params[:physician_id])
+    @patient = @ph.patients.find(params[:patient_id])
+    @log_entry = @patient.log_entries.build
   end
 
   def edit
-    @patient = Patient.find(params[:patient_id])
+    @ph = Physician.find(params[:physician_id])
+    @patient = @ph.patients.find(params[:patient_id])
     @log_entry = @patient.log_entries.find(params[:id])
   end
 
   def create
-    @patient = Patient.find(params[:patient_id])
-    @log_entry = @patient.log_entries.create(params[:log_entry])
-    redirect_to patient_log_entries_path(@patient)
+    @ph = Physician.find(params[:physician_id])
+    @patient = @ph.patients.find(params[:patient_id])
+    @log_entry = @patient.log_entries.build(params[:log_entry])
+    if @log_entry.save
+      redirect_to physician_patient_log_entries_path(@ph, @patient), notice: 'Log Entry was successfully created.'
+    else
+      render action:'new'
+    end
   end
 
   def update
-    @patient = Patient.find(params[:patient_id])
+    @ph = Physician.find(params[:physician_id])
+    @patient = @ph.patients.find(params[:patient_id])
     @log_entry = @patient.log_entries.find(params[:id])
-
-    respond_to do |format|
-      if @log_entry.update_attributes(params[:log_entry])
-        format.html { redirect_to patient_log_entries_path(@patient), notice: 'Log entry was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @log_entry.errors, status: :unprocessable_entity }
-      end
+    
+    if @log_entry.update_attributes(params[:log_entry])
+      redirect_to physician_patient_log_entries_path(@ph, @patient), notice: 'Log entry was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 
   def destroy
-    @patient = Patient.find(params[:patient_id])
+    @ph = Physician.find(params[:physician_id])
+    @patient = @ph.patients.find(params[:patient_id])
     @log_entry = @patient.log_entries.find(params[:id])
     @log_entry.destroy
-    redirect_to patient_log_entries_path(@patient)
+    redirect_to physician_patient_log_entries_path(@ph, @patient)
   end
   
   

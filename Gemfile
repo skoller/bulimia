@@ -4,6 +4,7 @@ gem 'rails', "~>3.2"
 gem 'jquery-rails'
 gem 'heroku'
 gem 'prawn'
+gem 'bcrypt-ruby'
 
 
 # Gems used only for assets and not required

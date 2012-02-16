@@ -1,7 +1,9 @@
 Bulimia::Application.routes.draw do
-  root :to => 'patients#index'
-  resources :patients do
-    resources :log_entries
+  root :to => 'physicians#index'
+  resources :physicians do
+    resources :patients do
+      resources :log_entries
+    end
   end
   match 'phone/sms_handler' => "phone#sms_handler", :as => :sms_handler
   # match 'phone/day' => "phone#sms_handler", :as => :day
