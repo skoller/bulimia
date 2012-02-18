@@ -319,8 +319,8 @@ class PhoneController < ApplicationController
         unless (params["Body"]).delete(" ") == ""
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           @log_e.personal_notes = "LAXATIVE: " + (params['Body']).squeeze(" ")
-          @log_e.save(:validate => :false)
           @ch.state = 'food_lax_note'
+          @log_e.save(:validate => :false)
           render BASE_DIR + "food_lax_note.xml"
           return false
         else
