@@ -599,7 +599,7 @@ class PhoneController < ApplicationController
             @log_e.binge = false
             @log_e.laxative = false
             @log_e.save(:validate => :false)
-            @ch.state = 'food'
+            @ch.state = 'vom_note'
             @ch.save(:validate => :false)
             render BASE_DIR + "vom_note.xml"
             return false
@@ -610,12 +610,12 @@ class PhoneController < ApplicationController
             @log_e.binge = false
             @log_e.laxative = false
             @log_e.save(:validate => :false)
-            @ch.state = 'food'
+            @ch.state = 'vom_note'
             @ch.save(:validate => :false)
             render BASE_DIR + "vom_note.xml"
             return false
           elsif ((params['Body']).to_f == 0 ) && (((params['Body']).downcase.delete(" ")) == "h")
-            @ch.state = 'food_when_hours'
+            @ch.state = 'vom_note'
             @ch.save(:validate => :false)
             render BASE_DIR + "vom_hours.xml"
             retunr false
