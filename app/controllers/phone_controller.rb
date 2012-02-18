@@ -414,7 +414,7 @@ class PhoneController < ApplicationController
             @ch.state = 'lax_when_hours'
             @ch.save(:validate => :false)
             render BASE_DIR + "lax_hours.xml"
-            retunr false
+            return false
           elsif (params['Body']).downcase.delete(" ") == "cancel"
             @ch.drop_it_like_its_hot
             @log_e.drop_it
