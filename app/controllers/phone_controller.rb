@@ -320,6 +320,7 @@ class PhoneController < ApplicationController
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           @log_e.personal_notes = "LAXATIVE: " + (params['Body']).squeeze(" ")
           @ch.state = 'food_lax_note'
+          @ch.save(:validate => :false)
           @log_e.save(:validate => :false)
           render BASE_DIR + "food_lax_note.xml"
           return false
