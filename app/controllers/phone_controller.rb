@@ -475,8 +475,9 @@ class PhoneController < ApplicationController
             @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
             @log_e.personal_notes = (params['Body']).squeeze(" ")
             @log_e.save(:validate => :false)
+            @ch.state = 'lax_note'
+            @ch.save(:validate => :false)
             render BASE_DIR + "lax_note.xml"
-            @ch.drop_it_like_its_hot
             return false
           else
             @error = "lax_dose_blank"
