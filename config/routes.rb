@@ -7,12 +7,16 @@ Bulimia::Application.routes.draw do
     end
   end
   match 'phone/sms_handler' => "phone#sms_handler", :as => :sms_handler
-  match "log_out" => "sessions#destroy", :as => "log_out"
-  match "log_in" => "sessions#new", :as => "log_in"
-  match "matched" => "sessions#create", :as => "matched"
+  match "log_out" => "sessions#destroy_ph", :as => "log_out"
+  match "log_in" => "sessions#new_physician_session", :as => "log_in"
+  match "matched" => "sessions#create_ph_session", :as => "matched"
   match "sign_up" => "physicians#new", :as => "sign_up"
   match "home_page" => "application#home_page", :as => "home_page"
   match "admin" => "admin#index", :as => "admin"
+  
+  match "patient_log_out" => "sessions#destroy_pt", :as => "patient_log_out"
+  match "patient_log_in" => "sessions#new_patient_session", :as => "patient_log_in"
+  match "patient_matched" => "sessions#create_pt_session", :as => "patient_matched"
   # match 'phone/day' => "phone#sms_handler", :as => :day
   #   match 'phone/food' => "phone#sms_handler", :as => :food
   #   match 'phone/time' => "phone#sms_handler", :as => :time

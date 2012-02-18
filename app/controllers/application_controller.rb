@@ -10,15 +10,26 @@ class ApplicationController < ActionController::Base
     @current_physician ||= Physician.find(session[:physician_id]) if session[:physician_id]
   end
   
-  def authenticate_physician
-    if session[:physician_id]
+  def authenticate_user
+    if session[:physician_id] || session[:patient_id]
     else
-      redirect_to log_in_path
+      redirect_to home_page_path
+    end
+  end
+  
+  def current_patient
+    @current_patient ||= Patient.find(session[:patient_id]) if session[:patient_id]
+  end
+  
+  def authenticate_patient
+    if session[:patient_id]
+    else
+      redirect_to patient_log_in_path
     end
   end
   
   
   helper_method :current_physician
-  
+  helper_method :current_patient
   
 end

@@ -1,4 +1,8 @@
 class Patient < ActiveRecord::Base
+  attr_accessible :phone_number, :password, :password_confirmation
+  has_secure_password
+  validates_presence_of :password, :on => :create
+  
   has_many :log_entries
   has_one :convo_handler
   has_one :physician

@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   
-  before_filter :authenticate_physician
+  before_filter :authenticate_user
  
   def index
     @ph = Physician.find(params[:physician_id])
@@ -22,8 +22,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
     @ph = Physician.find(params[:physician_id])
   end
-
-
+  
   def create
     @ph = Physician.find(params[:physician_id])
     @patient = @ph.patients.build(params[:patient])
@@ -34,7 +33,6 @@ class PatientsController < ApplicationController
       render action: "new"
     end
   end
-
 
   def update
     @ph = Physician.find(params[:physician_id])
