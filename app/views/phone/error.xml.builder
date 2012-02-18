@@ -7,7 +7,7 @@ xml.Response do
     xml.Sms("There is a problem with the number you are texting from. Please send texts only from the phone number associated with your account.")
  
   elsif   @error == "intro_error"
-    xml.Sms("Your response was not understood. Please text 'food' to enter an eating event. Text 'lax' to enter laxative use only. Text 'vom' to record vomiting only.")
+    xml.Sms("Your response was not understood. Please text 'food' to enter an eating event. Text 'lax' to enter laxative use only. Text 'vom' to enter vomiting only.")
       
   elsif @error == "when_minutes_error"
     xml.Sms("There was a problem with your response. Please try again. Using only numbers, text how many minutes ago this meal/snack/binge began.")
@@ -16,10 +16,10 @@ xml.Response do
     xml.Sms("There was a problem with your response. Please try again. Using only numbers, text how many hours ago this meal/snack/binge began.")
   
   elsif @error == "lax_when_minutes_error"
-    xml.Sms("There was a problem with your response. Please try again. Using only numbers, text how many minutes ago you took laxatives.")
+    xml.Sms("There was a problem with your response. Please try again. Using only numbers, text how many minutes ago you took this laxative.")
   
   elsif @error == "lax_when_hours_error"
-    xml.Sms("There was a problem with your response. Please try again. Using only numbers, text how many hours ago you took laxatives.")
+    xml.Sms("There was a problem with your response. Please try again. Using only numbers, text how many hours ago you took this laxative.")
   
   elsif @error == "vom_when_minutes_error"
     xml.Sms("There was a problem with your response. Please try again. Using only numbers, text how many minutes ago you vomited.")

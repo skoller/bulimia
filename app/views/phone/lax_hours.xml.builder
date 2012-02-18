@@ -1,4 +1,4 @@
 xml.instruct!
 xml.Response do 
-  xml.Sms("About how many hours ago did you take a laxative?")
+  xml.Sms("How many hours ago did you take this laxative?")
 end

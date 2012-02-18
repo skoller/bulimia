@@ -189,7 +189,7 @@ class PhoneController < ApplicationController
         #       end
 
         ########## food 
-      elsif @patient.convo_handler.state == 'food'
+      elsif (@patient.convo_handler.state == 'food') || (@patient.convo_handler.state == 'continue_food_entry')
         @ch = @patient.convo_handler
         if (params['Body']).downcase.delete(" ") == "cancel"
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
@@ -199,13 +199,37 @@ class PhoneController < ApplicationController
           return false
         end
         unless (params["Body"]).delete(" ") == ""
-          @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-          @log_e.food = (params['Body']).squeeze(" ")
-          @log_e.save(:validate => :false)
-          @ch.state = 'where'
-          @ch.save(:validate => :false)
-          render BASE_DIR + "where.xml"
-          return false
+            if ((params['Body']) =~ /\#/ ) && (@ch.state == "food")
+              @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+              @log_e.food = (params['Body']).squeeze(" ").tr('/#', '')
+              @log_e.save(:validate => :false)
+              @ch.state = 'where'
+              @ch.save(:validate => :false)
+              render BASE_DIR + "where.xml"
+              return false
+            elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "food")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               @log_e.food = (params['Body']).squeeze(" ")
+               @log_e.save(:validate => :false)
+               @ch.state = "continue_food_entry"
+               @ch.save(:validate => :false)
+               return false
+            elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "continue_food_entry")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               @log_e.food = @log_e.food + " " + (params['Body']).squeeze(" ")
+               @log_e.save(:validate => :false)
+               @ch.state = "continue_food_entry"
+               @ch.save(:validate => :false)
+               return false
+             elsif ((params['Body']) =~ /\#/ ) && (@ch.state == "continue_food_entry")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               @log_e.food = @log_e.food + " " + (params['Body']).squeeze(" ").tr('/#', '')
+               @log_e.save(:validate => :false)
+               @ch.state = "where"
+               @ch.save(:validate => :false)
+               render BASE_DIR + "where.xml"
+               return false
+            end
         else
           @error = "food_blank"
           render BASE_DIR + "error.xml"
@@ -332,7 +356,7 @@ class PhoneController < ApplicationController
 
         ########### personal_notes 
         
-         elsif @patient.convo_handler.state == 'food_lax_note'
+         elsif (@patient.convo_handler.state == 'food_lax_note') || (@patient.convo_handler.state == 'continue_food_lax_note_entry')
             @ch = @patient.convo_handler
             if (params['Body']).downcase.delete(" ") == "cancel"
               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
@@ -342,24 +366,52 @@ class PhoneController < ApplicationController
               return false
             end
             unless (params["Body"]).delete(" ") == ""
-              @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-              if @log_e.personal_notes 
-                @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ")
-                @log_e.save(:validate => :false)
-                render BASE_DIR + "thank_you.xml"
-                @ch.drop_it_like_its_hot
-                return false
+                if ((params['Body']) =~ /\#/ ) && (@ch.state == "food_lax_note")
+                  @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+                  if @log_e.personal_notes 
+                    @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ").tr('/#', '')
+                    @log_e.save(:validate => :false)
+                    render BASE_DIR + "thank_you.xml"
+                    @ch.drop_it_like_its_hot
+                    return false
+                  end
+                elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "food_lax_note")
+                   @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+                   if @log_e.personal_notes 
+                     @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ")
+                     @log_e.save(:validate => :false)
+                     @ch.state = 'continue_food_lax_note_entry'
+                     @ch.save(:validate => :false)
+                     return false
+                   end
+                elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "continue_food_lax_note_entry")
+                   @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+                   if @log_e.personal_notes 
+                      @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ")
+                      @log_e.save(:validate => :false)
+                      return false
+                   end
+                 elsif ((params['Body']) =~ /\#/ ) && (@ch.state == "continue_food_lax_note_entry")
+                   @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+                   if @log_e.personal_notes 
+                     @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ").tr('/#', '')
+                     @log_e.save(:validate => :false)
+                     render BASE_DIR + "thank_you.xml"
+                     @ch.drop_it_like_its_hot
+                     return false
+                   end
+                 end
               else
                 @error = "personal_notes_blank"
                 render BASE_DIR + "error.xml"
                 return false
               end
-            end
         
         
         
         
-      elsif @patient.convo_handler.state == 'note'
+        
+      elsif (@patient.convo_handler.state == 'note') || (@patient.convo_handler.state == 'continue_note')
         @ch = @patient.convo_handler
         if (params['Body']).downcase.delete(" ") == "cancel"
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
@@ -369,19 +421,44 @@ class PhoneController < ApplicationController
           return false
         end
         unless (params["Body"]).delete(" ") == ""
-          @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-          if @log_e.personal_notes 
-            @log_e.personal_notes = "NOTES: " + (params['Body']).squeeze(" ")
+          if ((params['Body']) =~ /\#/ ) && (@ch.state == "note")
+            @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first 
+            @log_e.personal_notes = (params['Body']).squeeze(" ").tr('/#', '')
             @log_e.save(:validate => :false)
             render BASE_DIR + "thank_you.xml"
             @ch.drop_it_like_its_hot
             return false
-          else
+          elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "note")
+             @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first 
+             @log_e.personal_notes = (params['Body']).squeeze(" ").tr('/#', '')
+             @log_e.save(:validate => :false)
+             render BASE_DIR + "thank_you.xml"
+             @ch.state = 'continue_note'
+             @ch.save(:validate => :false)
+             return false
+          elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "continue_note")
+             @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+             if @log_e.personal_notes 
+                @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ")
+                @log_e.save(:validate => :false)
+                return false
+             end
+           elsif ((params['Body']) =~ /\#/ ) && (@ch.state == "continue_note")
+             @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+             if @log_e.personal_notes 
+               @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ").tr('/#', '')
+               @log_e.save(:validate => :false)
+               render BASE_DIR + "thank_you.xml"
+               @ch.drop_it_like_its_hot
+               return false
+             end
+           end
+         else
             @error = "personal_notes_blank"
             render BASE_DIR + "error.xml"
             return false
-          end
-        end
+         end
+      
 
           ########### lax schematic
 
@@ -567,7 +644,7 @@ class PhoneController < ApplicationController
           #       end
 
           ######### lax note  
-        elsif @patient.convo_handler.state == 'lax_note'
+        elsif (@patient.convo_handler.state == 'lax_note') || (@patient.convo_handler.state == 'continue_lax_note')
           @ch = @patient.convo_handler
           if (params['Body']).downcase.delete(" ") == "cancel"
             @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
@@ -577,12 +654,41 @@ class PhoneController < ApplicationController
             return false
           end
           unless (params["Body"]).delete(" ") == ""
-            @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-            @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ")
-            @log_e.save(:validate => :false)
-            render BASE_DIR + "thank_you.xml"
-            @ch.drop_it_like_its_hot
-            return false
+            if ((params['Body']) =~ /\#/ ) && (@ch.state == "lax_note")
+              @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+              if @log_e.personal_notes 
+                @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ").tr('/#', '')
+                @log_e.save(:validate => :false)
+                render BASE_DIR + "thank_you.xml"
+                @ch.drop_it_like_its_hot
+                return false
+              end
+            elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "lax_note")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               if @log_e.personal_notes 
+                 @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ")
+                 @log_e.save(:validate => :false)
+                 @ch.state = 'continue_lax_note'
+                 @ch.save(:validate => :false)
+                 return false
+               end
+            elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "continue_lax_note")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               if @log_e.personal_notes 
+                  @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ")
+                  @log_e.save(:validate => :false)
+                  return false
+               end
+             elsif ((params['Body']) =~ /\#/ ) && (@ch.state == "continue_lax_note")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               if @log_e.personal_notes 
+                 @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ").tr('/#', '')
+                 @log_e.save(:validate => :false)
+                 render BASE_DIR + "thank_you.xml"
+                 @ch.drop_it_like_its_hot
+                 return false
+               end
+             end
           else
             @error = "lax_note_blank"
             render BASE_DIR + "error.xml"
@@ -669,7 +775,7 @@ class PhoneController < ApplicationController
             return false    
           end
 
-        elsif @patient.convo_handler.state == 'vom_note'
+        elsif (@patient.convo_handler.state == 'vom_note') || (@patient.convo_handler.state == 'continue_vom_note')
           @ch = @patient.convo_handler
           if (params['Body']).downcase.delete(" ") == "cancel"
             @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
@@ -679,12 +785,35 @@ class PhoneController < ApplicationController
             return false
           end
           unless (params["Body"]).delete(" ") == ""
-            @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-            @log_e.personal_notes = "NOTES: " + (params['Body']).squeeze(" ")
-            @log_e.save(:validate => :false)
-            render BASE_DIR + "thank_you.xml"
-            @ch.drop_it_like_its_hot
-            return false
+            if ((params['Body']) =~ /\#/ ) && (@ch.state == "vom_note")
+              @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+              @log_e.food = (params['Body']).squeeze(" ").tr('/#', '')
+              @log_e.save(:validate => :false)
+              render BASE_DIR + "thank_you.xml"
+              @ch.drop_it_like_its_hot
+              return false
+            elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "vom_note")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               @log_e.food = (params['Body']).squeeze(" ")
+               @log_e.save(:validate => :false)
+               @ch.state = "continue_vom_note"
+               @ch.save(:validate => :false)
+               return false
+            elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "continue_vom_note")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               @log_e.food = @log_e.food + " " + (params['Body']).squeeze(" ")
+               @log_e.save(:validate => :false)
+               @ch.state = "continue_vom_note"
+               @ch.save(:validate => :false)
+               return false
+             elsif ((params['Body']) =~ /\#/ ) && (@ch.state == "continue_vom_note")
+               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+               @log_e.food = @log_e.food + " " + (params['Body']).squeeze(" ").tr('/#', '')
+               @log_e.save(:validate => :false)
+               render BASE_DIR + "thank_you.xml"
+               @ch.drop_it_like_its_hot
+               return false
+            end
           else
             @error = "vom_note_blank"
             render BASE_DIR + "error.xml"
