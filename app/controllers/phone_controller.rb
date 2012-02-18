@@ -617,10 +617,10 @@ class PhoneController < ApplicationController
             render BASE_DIR + "vom_note.xml"
             return false
           elsif ((params['Body']).to_f == 0 ) && (((params['Body']).downcase.delete(" ")) == "h")
-            @ch.state = 'vom_note'
+            @ch.state = 'vom_when_hours'
             @ch.save(:validate => :false)
             render BASE_DIR + "vom_hours.xml"
-            retunr false
+            return false
           elsif (params['Body']).downcase.delete(" ") == "cancel"
             @ch.drop_it_like_its_hot
             @log_e.drop_it
