@@ -320,6 +320,7 @@ class PhoneController < ApplicationController
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           @log_e.personal_notes = "LAXATIVE: " + (params['Body']).squeeze(" ")
           @log_e.save(:validate => :false)
+          @ch.state = 'food_lax_note'
           render BASE_DIR + "food_lax_note.xml"
           return false
         else
@@ -329,6 +330,34 @@ class PhoneController < ApplicationController
         end
 
         ########### personal_notes 
+        
+         elsif @patient.convo_handler.state == 'food_lax_note'
+            @ch = @patient.convo_handler
+            if (params['Body']).downcase.delete(" ") == "cancel"
+              @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+              @ch.drop_it_like_its_hot
+              @log_e.drop_it
+              render BASE_DIR + "cancel.xml"
+              return false
+            end
+            unless (params["Body"]).delete(" ") == ""
+              @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
+              if @log_e.personal_notes 
+                @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ")
+                @log_e.save(:validate => :false)
+                render BASE_DIR + "thank_you.xml"
+                @ch.drop_it_like_its_hot
+                return false
+              else
+                @error = "personal_notes_blank"
+                render BASE_DIR + "error.xml"
+                return false
+              end
+            end
+        
+        
+        
+        
       elsif @patient.convo_handler.state == 'note'
         @ch = @patient.convo_handler
         if (params['Body']).downcase.delete(" ") == "cancel"
@@ -341,7 +370,7 @@ class PhoneController < ApplicationController
         unless (params["Body"]).delete(" ") == ""
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           if @log_e.personal_notes 
-            @log_e.personal_notes = @log_e.personal_notes + "; NOTES: " + (params['Body']).squeeze(" ")
+            @log_e.personal_notes = "NOTES: " + (params['Body']).squeeze(" ")
             @log_e.save(:validate => :false)
             render BASE_DIR + "thank_you.xml"
             @ch.drop_it_like_its_hot
