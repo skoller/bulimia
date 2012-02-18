@@ -102,7 +102,7 @@ class PhoneController < ApplicationController
           @ch.save(:validate => :false)
           render BASE_DIR + "food.xml"
           return false
-        elsif ()(params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
+        elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
           @log_e.date = ( DateTime.now - ((params['Body']).to_f).minutes )
           @log_e.save(:validate => :false)
           @ch.state = 'food'
@@ -351,6 +351,7 @@ class PhoneController < ApplicationController
             render BASE_DIR + "error.xml"
             return false
           end
+        end
 
           ########### lax schematic
 
@@ -409,7 +410,7 @@ class PhoneController < ApplicationController
             @ch.save(:validate => :false)
             render BASE_DIR + "lax_dose.xml"
             return false
-          elsif ((params['Body']).to_f.class == Float) && (params['Body']).to_f != 0)
+          elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
             @log_e.date = ( DateTime.now - ((params['Body']).to_f).hours )
             @log_e.location = "N/A"
             @log_e.food = "N/A"
