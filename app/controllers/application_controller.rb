@@ -46,8 +46,16 @@ end
     end
   end
   
+  def authenticate_admin
+    if session[:physician_id] == 1
+    else
+      redirect_to home_page_path
+    end
+  end
+  
   def restrict_access_to_relevant_pages
       if ((session[:patient_id]).to_s && ((params[:patient_id]) == (session[:patient_id]).to_s)) || ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s))
+      elsif session[:physician_id] == 1
       else
         redirect_to home_page_path
       end

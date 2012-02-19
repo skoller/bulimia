@@ -1,75 +1,66 @@
 
 <%= form_for [@ph, @patient], :html => {:class => "form-horizontal" } do |f| %>
-  <legend><%= mode == :edit ? "Edit" : "New" %> Patient</legend>
-  <% if @patient.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+<legend><%= mode == :edit ? "Edit" : "New" %> Patient</legend>
+<% if @patient.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
 
-      <ul>
-      <% @patient.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<ul>
+		<% @patient.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
-  <div class="control-group">
-    <%= f.label :first_name, :class => "control-label" %>
-    <div class= "controls">
-      <%= f.text_field :first_name %>
-    </div>
-  </div>
+<div class="control-group">
+	<%= f.label :first_name, :class => "control-label" %>
+	<div class= "controls">
+		<%= f.text_field :first_name %>
+	</div>
+</div>
 
-  <div class="control-group">
-    <%= f.label :last_name, :class => "control-label" %>
-    <div class= "controls">
-      <%= f.text_field :last_name  %>
-    </div>
-  </div>
+<div class="control-group">
+	<%= f.label :last_name, :class => "control-label" %>
+	<div class= "controls">
+		<%= f.text_field :last_name  %>
+	</div>
+</div>
 
-  <div class="control-group">
-    <%= f.label :dob, :class => "control-label" %>
-    <div class= "controls">
-      <%= f.text_field :dob %>
-    </div>
-  </div>
+<div class="control-group">
+	<%= f.label :dob, :class => "control-label" %>
+	<div class= "controls">
+		<%= f.text_field :dob %>
+	</div>
+</div>
 
-  <div class="control-group">
-    <%= f.label :sex, :class => "control-label" %>
-    <div class= "controls">
-      <%= f.text_field :sex %>
-    </div>
-  </div>
+<div class="control-group">
+	<%= f.label :sex, :class => "control-label" %>
+	<div class= "controls">
+		<%= f.text_field :sex %>
+	</div>
+</div>
 
-  <div class="control-group">
-    <%= f.label :diagnosis, :class => "control-label" %>
-    <div class= "controls">
-      <%= f.text_field :diagnosis %>
-    </div>
-  </div>
+<div class="control-group">
+	<%= f.label :diagnosis, :class => "control-label" %>
+	<div class= "controls">
+		<%= f.text_field :diagnosis %>
+	</div>
+</div>
 
-  <div class="control-group">
-    <%= f.label :phone_number, :class => "control-label" %>
-    <div class= "controls">
-      <%= f.text_field :phone_number %>
-    </div>
-  </div>
+<div class="control-group">
+	<%= f.label :phone_number, :class => "control-label" %>
+	<div class= "controls">
+		<%= f.text_field :phone_number %>
+	</div>
+</div>
 
- 	<p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </p>
-  
-  <div class="form-actions">
-    <% mode == :edit ? button_text = "Save Changes to Patient" : button_text = "Save Patient" %>
-    <%= f.button button_text, :class => "btn btn-primary" %>
-    <%= link_to physician_patients_path(@ph) do %>
-      <button class="btn" method="get">Go Back</button>
-    <% end %>
-  </div>
+<div class="form-actions">
+	<% mode == :edit ? button_text = "Save Changes to Patient" : button_text = "Save Patient" %>
+	<%= f.button button_text, :class => "btn btn-primary" %>
+	<%= link_to physician_patients_path(@ph) do %>
+	<button class="btn" method="get">Go Back</button>
+	<% end %>
+</div>
 
 <% end %>

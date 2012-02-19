@@ -16,7 +16,13 @@
   <%= link_to edit_physician_patient_path(@ph, @patient)  do %>
     <button class="btn btn-warning">Edit this Patient</button>
   <% end %>
-  <%= link_to physician_patient_path(@ph, @patient), confirm: 'Are you sure?', method: :delete  do %>
-    <button class="btn btn-danger">Delete this entry</button>
+	<% if session[:physician_id] == 1 %>
+		<%= link_to admin_pt_pass_edit_path(:patient_id => @patient.id)  do %>
+	    <button class="btn btn-danger">Reset Password</button>
+	  <% end %>
+	<% end %>
+  <%= link_to archive_pt_path(:physician_id => @ph.id, :id => @patient.id), confirm: 'Are you sure?' do %>
+    <button class="btn btn-danger">Archive Patient</button>
   <% end %>
 </div>
+<%= link_to "Deactivate Patient Account", deactivate_message_path(:patient_id => @patient.id, :physician_id => @ph.id), confirm: 'Are you sure?'%>

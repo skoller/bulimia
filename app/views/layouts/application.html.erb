@@ -15,7 +15,10 @@
 		<%= link_to "Log Out", log_out_path, method: :delete %>
 	<% elsif current_physician %>
 		<p>You are signed in as <%= current_physician.email %></p></br>
-		<%= link_to "Log Out", log_out_path, method: :delete %>
+		<%= link_to "Log Out", log_out_path, method: :delete %></br>
+		<% if (current_physician.id == 1) && (@admin_home == nil) %>
+		<%= link_to "Back to Admin Home", admin_path(current_physician) %>
+		<% end %>
 	<% elsif @no_session_format %>
 	<% end %>
 	<%= yield %>

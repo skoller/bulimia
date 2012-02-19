@@ -4,6 +4,9 @@ class LogEntriesController < ApplicationController
   before_filter :restrict_access_to_relevant_pages
   
   def index
+    if session[:physician_id]
+      @physician_view = true
+    end
     @ph = Physician.find(params[:physician_id])
     @patient = @ph.patients.find(params[:patient_id])
     @log_entries = @patient.log_entries

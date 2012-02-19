@@ -1,0 +1,5 @@
+<h1>Active Patient Accounts</h1>
+
+<% @patients_act.each do |pt| %>
+	</br><%= pt.phone_number %>, Patient ID: <%= pt.id %></br>
+	<% end %>

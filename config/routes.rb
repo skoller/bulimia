@@ -6,13 +6,26 @@ Bulimia::Application.routes.draw do
       resources :log_entries
     end
   end
+  
+  match "home_page" => "application#home_page", :as => "home_page"
+  match "deactivate_msg/:physician_id/:patient_id" => "physicians#deactivate_message", :as => "deactivate_message"
+  match "ph_deactivate" => "physicians#destroy_archive", :as => "destroy_archive"
+  match "pt_archive/:physician_id/:id" => "patients#archive", :as => "archive_pt"
+  match "physician/:physician_id/patient_archive" => "physicians#pt_archive_index", :as => "pt_archive_index"
+  # match "admin_pt_archive/:physician_id/:id" => "patients#admin_pt_archive", :as => "admin_pt_archive"
+  #   
+  #   match "index_pt_archive/:physician_id" => "patients#index_pt_archive", :as => "index_pt_archive"
+  
+  # flash.now.alert=
   match 'phone/sms_handler' => "phone#sms_handler", :as => :sms_handler
   match "physician_log_out" => "sessions#destroy_ph", :as => "log_out"
   match "physician_log_in" => "sessions#new_physician_session", :as => "log_in"
   match "physician_find" => "sessions#create_ph_session", :as => "matched"
-  match "physcian_sign_up" => "physicians#new", :as => "sign_up"
-  match "home_page" => "application#home_page", :as => "home_page"
-  match "admin" => "admin#index", :as => "admin"
+  match "physician_sign_up" => "physicians#new", :as => "sign_up"
+  match "physician_additional_info" => "physicians#physician_additional_info", :as => "physician_additional_info"
+  match "welcome_ph_instructions/:physician_id" => "physicians#welcome_ph_instructions", :as => "welcome_ph_instructions" 
+  
+  
   
   match "patient_log_out" => "sessions#destroy_pt", :as => "patient_log_out"
   match "patient_log_in" => "sessions#new_patient_session", :as => "patient_log_in"
@@ -21,6 +34,19 @@ Bulimia::Application.routes.draw do
   match "patient_show/:patient_id" => "patients#patient_show_limited", :as => "pt_show"
   match "patient_update/:patient_id" => "patients#patient_update_limited", :as => "pt_update"
   
+  match "admin_override_pt_password_edit/:patient_id" => "patients#admin_pt_password_edit", :as => "admin_pt_pass_edit"
+  match "admin_override_pt_password_update/:patient_id" => "patients#admin_pt_password_update", :as => "admin_pt_pass_update"
+  match "admin" => "admin#index", :as => "admin"
+  match "archived_physicians" => "admin#archived_physicians", :as => "archived_physicians"
+  match "archived_patients" => "admin#archived_patients", :as => "archived_patients"
+  match "active_patients" => "admin#active_patients", :as => "active_patients"
+  
+  
+  
+ 
+ 
+ 
+ 
   # match 'phone/day' => "phone#sms_handler", :as => :day
   #   match 'phone/food' => "phone#sms_handler", :as => :food
   #   match 'phone/time' => "phone#sms_handler", :as => :time

@@ -1,0 +1,7 @@
+<%= link_to "Back to Patients Listing", physician_patients_path(@ph) %>
+
+<h2>Archived Patient Accounts</h2>
+
+<% @pt_arch.each do |pt| %>
+	</br><%= pt.phone_number %>, Patient ID: <%= pt.id %></br>
+	<% end %>

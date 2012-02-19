@@ -64,9 +64,19 @@
 
 </table>
 <div class="form-actions">
-  <%= link_to physician_patients_path(@ph) do %>
-      <button class="btn">&lt;&lt; Return to Patient Listing</button>
-  <% end %>
+	<% if @physician_view %>
+  	<%= link_to physician_patients_path(@ph) do %>
+	      <button class="btn">&lt;&lt; Return to Patient Listing</button>
+	  <% end %>
+	<% else %>
+		<%= link_to pt_edit_path(:patient_id => @patient.id) do %>	
+		<button class="btn">Edit Password or Phone Number</button>
+		<% end %>
+		<%= link_to pt_show_path(:patient_id => @patient.id) do %>	
+		<button class="btn">View Account Information</button>
+		<% end %>
+	<% end %>
+	
   <%= link_to physician_patient_log_entries_path(@ph, @patient, format: "pdf") do %>
       <button class="btn">Generate Printable Log (PDF)</button>
   <% end %>
@@ -74,6 +84,3 @@
       <button class="btn">Create New Entry</button>
   <% end %>
 </div>
-
-<%= link_to "Edit Phone Number or Password", pt_edit_path(:patient_id => @patient.id) %>
-<%= link_to "View My Account Information", pt_show_path(:patient_id => @patient.id) %>

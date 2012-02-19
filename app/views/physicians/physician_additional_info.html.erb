@@ -1,0 +1,51 @@
+<h1>Please Provide A Few More Details...</h1>
+
+<%= form_for @ph, :html => {:class => "form-horizontal" } do |f| %>
+  <legend>Physician</legend>
+  <% if @ph.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ph.errors.count, "error") %> prohibited your changes from being saved:</h2>
+
+      <ul>
+      <% @ph.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="control-group">
+    <%= f.label :first_name, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.text_field :first_name %>
+    </div>
+  </div>
+
+	<div class="control-group">
+    <%= f.label :last_name, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.text_field :last_name %>
+    </div>
+  </div>
+
+	<div class="control-group">
+    <%= f.label :state, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.text_field :state %>
+    </div>
+  </div>
+
+	<div class="control-group">
+    <%= f.label :medical_specialty, :class => "control-label" %>
+    <div class= "controls">
+      <%= f.text_field :specialty %>
+    </div>
+  </div>
+
+	
+
+  <div class="form-actions">
+		<%= f.button "Continue", :class => "btn btn-primary" %>
+  </div>
+
+<% end %>

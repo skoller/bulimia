@@ -16,3 +16,6 @@
     <button class="btn btn-warning">Edit Phone Number or Password</button>
   <% end %>
 </div>
+
+
+<%= link_to "Deactivate Account", deactivate_message_path(:patient_id => @patient.id, :physician_id => @ph.id), confirm: 'Are you sure?'%>

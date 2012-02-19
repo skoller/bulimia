@@ -1,0 +1,27 @@
+<h2>Physician Details</h2>
+<br />
+<table class="table table-bordered table-striped">
+  <tr><th>First Name</th><td><%= @physician.first_name  %></td></tr>
+  <tr><th>Last Name</th><td><%= @physician.last_name %></td></tr>
+  <tr><th>Email</th><td><%= @physician.email %></td></tr>
+  <tr><th>State</th><td><%= @physician.state %></td></tr>
+  <tr><th>Medical Specialty</th><td><%= @physician.specialty %></td></tr>
+</table>
+
+<div class="form-actions">
+  <%= link_to physician_patients_path(@ph) do %>
+    <button class="btn">&lt;&lt; Return to Patients Listing</button>
+  <% end %>
+  <%= link_to edit_physician_path(@ph)  do %>
+    <button class="btn btn-warning">Edit</button>
+  <% end %>
+	<%= link_to ph_pass_edit_path(:id => @physician.id)  do %>
+	  <button class="btn btn-danger">Reset Password</button>
+	<% end %>
+     
+</div>
+<% if @normal_ph %>
+<%= link_to "Deactivate Account", deactivate_path, confirm: 'Are you sure?'%>
+<% elsif @admin_ph %>
+<%= link_to "Destroy / Archive", destroy_archive_path, confirm: 'Are you sure?' %>
+<% end %>
