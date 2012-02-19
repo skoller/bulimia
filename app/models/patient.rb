@@ -1,5 +1,5 @@
 class Patient < ActiveRecord::Base
-  attr_accessible :phone_number, :password, :password_confirmation
+  attr_accessible :phone_number, :password, :password_confirmation, :first_name, :last_name, :dob, :sex, :diagnosis
   has_secure_password
   validates_presence_of :password, :on => :create
   

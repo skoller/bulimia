@@ -7,16 +7,20 @@ Bulimia::Application.routes.draw do
     end
   end
   match 'phone/sms_handler' => "phone#sms_handler", :as => :sms_handler
-  match "log_out" => "sessions#destroy_ph", :as => "log_out"
-  match "log_in" => "sessions#new_physician_session", :as => "log_in"
-  match "matched" => "sessions#create_ph_session", :as => "matched"
-  match "sign_up" => "physicians#new", :as => "sign_up"
+  match "physician_log_out" => "sessions#destroy_ph", :as => "log_out"
+  match "physician_log_in" => "sessions#new_physician_session", :as => "log_in"
+  match "physician_find" => "sessions#create_ph_session", :as => "matched"
+  match "physcian_sign_up" => "physicians#new", :as => "sign_up"
   match "home_page" => "application#home_page", :as => "home_page"
   match "admin" => "admin#index", :as => "admin"
   
   match "patient_log_out" => "sessions#destroy_pt", :as => "patient_log_out"
   match "patient_log_in" => "sessions#new_patient_session", :as => "patient_log_in"
-  match "patient_matched" => "sessions#create_pt_session", :as => "patient_matched"
+  match "patient_find" => "sessions#create_pt_session", :as => "patient_matched"
+  match "patient_edit/:patient_id" => "patients#patient_edit_limited", :as => "pt_edit"
+  match "patient_show/:patient_id" => "patients#patient_show_limited", :as => "pt_show"
+  match "patient_update/:patient_id" => "patients#patient_update_limited", :as => "pt_update"
+  
   # match 'phone/day' => "phone#sms_handler", :as => :day
   #   match 'phone/food' => "phone#sms_handler", :as => :food
   #   match 'phone/time' => "phone#sms_handler", :as => :time

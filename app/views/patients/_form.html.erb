@@ -54,6 +54,15 @@
       <%= f.text_field :phone_number %>
     </div>
   </div>
+
+ 	<p>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
   
   <div class="form-actions">
     <% mode == :edit ? button_text = "Save Changes to Patient" : button_text = "Save Patient" %>

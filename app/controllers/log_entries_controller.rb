@@ -1,6 +1,7 @@
 class LogEntriesController < ApplicationController
  
-  before_filter :authenticate_physician
+  before_filter :authenticate_user
+  before_filter :restrict_access_to_relevant_pages
   
   def index
     @ph = Physician.find(params[:physician_id])

@@ -1,11 +1,9 @@
 class SessionsController < ApplicationController
   
 def new_physician_session
-  @no_session_format = true
 end
 
 def new_patient_session
-  @no_session_format = true
 end
 
 def create_ph_session
@@ -17,18 +15,18 @@ def create_ph_session
     session[:physician_id] = ph.id
     redirect_to physician_patients_path(ph), notice: "Logged in!"
   else
-    render "new", notice: "Invalid email or password"
+    render "new_physician_session", notice: "Invalid email or password"
   end
 end
 
 def create_pt_session
-  pt = Patient.find_by_email(params[:phone_number])
-  ph = pt.physician
+  pt = Patient.find_by_phone_number(params[:phone_number])
+  ph = Physician.find(pt.physician_id)
   if pt && pt.authenticate(params[:password])
     session[:patient_id] = pt.id
     redirect_to physician_patient_log_entries_path(ph, pt), notice: "Logged in!"
   else
-    render "new", notice: "Invalid email or password"
+    render "new_patient_session", :notice => "Invalid email or password"
   end
 end
 

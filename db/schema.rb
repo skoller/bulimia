@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120215223800) do
+ActiveRecord::Schema.define(:version => 20120218221006) do
 
   create_table "convo_handlers", :force => true do |t|
     t.string   "state"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20120215223800) do
     t.string   "phone_number"
     t.integer  "convo_handler_id"
     t.integer  "physician_id"
+    t.string   "password_digest"
   end
 
   add_index "patients", ["convo_handler_id"], :name => "index_patients_on_convo_handler_id"

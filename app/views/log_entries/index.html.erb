@@ -74,3 +74,6 @@
       <button class="btn">Create New Entry</button>
   <% end %>
 </div>
+
+<%= link_to "Edit Phone Number or Password", pt_edit_path(:patient_id => @patient.id) %>
+<%= link_to "View My Account Information", pt_show_path(:patient_id => @patient.id) %>
