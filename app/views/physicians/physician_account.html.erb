@@ -1,0 +1,29 @@
+<h2>Physician Details</h2>
+<br />
+<table class="table table-bordered table-striped">
+  <tr><th>First Name</th><td><%= @ph.first_name  %></td></tr>
+  <tr><th>Last Name</th><td><%= @ph.last_name %></td></tr>
+  <tr><th>Email</th><td><%= @ph.email %></td></tr>
+  <tr><th>State</th><td><%= @ph.state %></td></tr>
+  <tr><th>Medical Specialty</th><td><%= @ph.specialty %></td></tr>
+</table>
+
+<div class="form-actions">
+  <%= link_to physician_patients_path(@ph) do %>
+    <button class="btn">&lt;&lt; Return to Patients Listing</button>
+  <% end %>
+  <%= link_to edit_physician_account_path(:physician_id => @ph.id)  do %>
+    <button class="btn btn-warning">Edit</button>
+  <% end %>
+	<%= link_to ph_password_edit_path(:physician_id => @ph.id)  do %>
+     <button class="btn btn-warning">Change Password</button>
+  <% end %>
+
+     
+</div>
+<% if @normal_ph %>
+<%= link_to "Deactivate Account", deactivate_ph_message_path(:physician_id => @ph.id), confirm: 'Are you sure you want to deactivate your account?'%>
+<% end %>
+
+
+

@@ -5,7 +5,7 @@ class LogEntriesController < ApplicationController
   
   def index
     if session[:physician_id]
-      @physician_view = true
+      @physician_or_admin_view = true
     elsif session[:patient_id]
       @patient_view = true
     end

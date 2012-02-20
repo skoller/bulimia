@@ -1,4 +1,4 @@
-<h2>Listing patients</h2>
+<h2>Listing Patients</h2> <h2>of Dr. <% if @physician_or_admin_view && @ph.first_name && @ph.last_name%> <%= @ph.first_name + " " + @ph.last_name %> <% end %></h2>  <% if @ph.archive == true %> <h2>WITHOUT WEB/SMS ACCESS</h2> <% end %>
 
 <table class="table table-bordered table-striped">
   <thead>
@@ -45,7 +45,7 @@
         <% end %>
       </td>
 			<td>
-        <%= link_to deactivate_message_path(:physician_id => @ph.id, :patient_id => patient.id), confirm: 'Are you sure you want to deactivate this patient\'s account?' do %>
+        <%= link_to deactivate_pt_message_path(:physician_id => @ph.id, :patient_id => patient.id), confirm: 'Are you sure you want to deactivate this patient\'s account?' do %>
           <button class="btn btn-danger">Cancel Account</button>
         <% end %>
       </td>
@@ -61,5 +61,8 @@
     <% end %>
 		<%= link_to pt_archive_index_path(:physician_id => @ph.id) do %>
         <button class="btn">View Patient Archive</button>
+    <% end %>
+		<%= link_to physician_account_path(:physician_id => @ph.id) do %>
+        <button class="btn">Manage Account</button>
     <% end %>
 </div>

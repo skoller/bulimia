@@ -1,6 +1,6 @@
 
 <%= form_for [@ph, @patient], :html => {:class => "form-horizontal" } do |f| %>
-<legend><%= mode == :edit ? "Edit" : "New" %> Patient</legend>
+<legend><%= mode == :edit ? "Edit Account" : "New Patient" %> Patient</legend>
 <% if @patient.errors.any? %>
 <div id="error_explanation">
 	<h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
@@ -54,6 +54,11 @@
 		<%= f.text_field :phone_number %>
 	</div>
 </div>
+
+<% if mode == :new %>
+<%= f.hidden_field :password, :value => "1234bulimiatx#{@password_random_suffix}"%>
+<%= f.hidden_field :password_confirmation, :value => "1234bulimiatx#{@password_random_suffix}" %>
+<% end %>
 
 <div class="form-actions">
 	<% mode == :edit ? button_text = "Save Changes to Patient" : button_text = "Save Patient" %>

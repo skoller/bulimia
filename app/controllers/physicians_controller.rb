@@ -20,22 +20,29 @@ class PhysiciansController < ApplicationController
   end
 
   
-  def show
+  def physician_account
     if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
       if (session[:physician_id] == 1)
         @admin_ph = true
-        @physician = Physician.find(params[:id])
+        @ph = Physician.find(params[:physician_id])
       elsif ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s))
         @normal_ph = true
+        @ph = Physician.find(params[:physician_id])
       end
     else
       patient_restriction
     end
   end
 
-  def edit
+  def edit_physician_account
     if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
-      @physician = Physician.find(params[:id])
+      if (session[:physician_id] == 1)
+        @admin_ph = true
+        @ph = Physician.find(params[:physician_id])
+      elsif ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s))
+        @normal_ph = true
+        @ph = Physician.find(params[:physician_id])
+      end
     else
       patient_restriction
     end
@@ -43,11 +50,15 @@ class PhysiciansController < ApplicationController
 
   def update
     if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
-      @ph = Physician.find(params[:physician_id])
-      if (@ph.update_attributes(params[:physician]))
-        redirect_to physician_path(@ph), :notice => "Your updates were successful."
+      if session[:physician_id] == 1
+        @ph = Physician.find(params[:id])
       else
-        redirect_to :action => 'edit'
+        @ph = Physician.find(params[:physician_id])
+      end
+      if (@ph.update_attributes(params[:physician]))
+        redirect_to physician_account_path(:physician_id => @ph.id), :notice => "Your updates were successful."
+      else
+        redirect_to :action => 'edit_physician_account'
       end
     elsif ((session[:physician_id]).to_s && ((params[:id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
       @ph = Physician.find(params[:id])
@@ -67,8 +78,7 @@ class PhysiciansController < ApplicationController
 
   def ph_password_edit
     if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
-      @patient = Patient.find(params[:patient_id])
-      @ph = Physician.find(@patient.physician_id)  
+      @ph = Physician.find(params[:physician_id])  
     else
       patient_restriction
     end
@@ -76,13 +86,11 @@ class PhysiciansController < ApplicationController
 
   def ph_password_update
     if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
-      @patient = Patient.find(params[:patient_id])
-      @ph = Physician.find(@patient.physician_id)
-
-      if @patient.update_attributes(params[:patient])
-        redirect_to physician_patient_path(@ph, @patient), :notice => "The patient's password was successfully reset"
+        @ph = Physician.find(params[:physician_id])
+      if (@ph.update_attributes(params[:physician]))
+        redirect_to physician_patients_path(:physician_id => @ph.id), :notice => "Your password update was successful."
       else
-        render :action =>"admin_pt_password_edit"
+        redirect_to :action => 'ph_password_edit'
       end
     else
       patient_restriction
@@ -104,9 +112,13 @@ class PhysiciansController < ApplicationController
     end
   end
 
-  def deactivate_message
+  def deactivate_pt_message
     @ph = Physician.find(params[:physician_id])
     @pt = Patient.find(params[:patient_id])
+  end
+  
+  def deactivate_ph_message
+    @ph = Physician.find(params[:physician_id])
   end
   
   def physician_additional_info
@@ -120,6 +132,20 @@ class PhysiciansController < ApplicationController
   def welcome_ph_instructions
     @ph = Physician.find(params[:physician_id])
   end
+  
+  def unarchive_patient
+    if ((session[:physician_id]).to_s && ((params[:id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
+    @pt = Patient.find(params[:patient_id])
+    @ph = Physician.find(@pt.physician_id)
+    @pt.archive = nil
+    @pt.save(:validate => false)
+    redirect_to physician_patients_path(@ph, @pt)
+    else
+      patient_restriction
+    end
+    
+  end
+  
   
 def pt_archive_index
   @ph = Physician.find(params[:physician_id])

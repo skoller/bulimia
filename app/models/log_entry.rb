@@ -9,7 +9,13 @@ class LogEntry < ActiveRecord::Base
   def day_web_display
     if self.date
       day = self.date.to_time.strftime('%d').to_i.to_s
-      return (day + self.date.to_time.strftime('%a %b %d %Y'))
+      return (self.date.to_time.strftime('%a %b ')) + day
+    end
+  end
+  
+  def year_web_display
+    if self.date
+      return self.date.to_time.strftime(' %Y')
     end
   end
 

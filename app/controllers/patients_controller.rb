@@ -7,6 +7,7 @@ class PatientsController < ApplicationController
       @ph = Physician.find(params[:physician_id])
       @pt = @ph.patients.where(:archive => nil).all
       @patients = @pt.sort_by { |pt| pt.last_name.downcase }
+      @physician_or_admin_view = true
     else
       patient_restriction
     end
@@ -16,11 +17,12 @@ class PatientsController < ApplicationController
     if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
       @ph = Physician.find(params[:physician_id])
       @patient = Patient.find(params[:id])
+      @patient.activity_history = @patient.activity_history + "  >>>>>> Archived by #{@ph.email} on #{DateTime.now.to_time.strftime('%c')}"
       @patient.archive = true
       if @patient.save(:validate => false)
         redirect_to pt_archive_index_path(:physician_id => @ph.id)
       else
-        redirect_to admin_path(@ph)
+        redirect_to physician_patients_path(@ph)
       end
     else
       patient_restriction
@@ -68,7 +70,9 @@ class PatientsController < ApplicationController
       if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
         @ph = Physician.find(params[:physician_id])
         @patient = @ph.patients.build(params[:patient])
-
+        @patient.activity_history = "*****Account created by #{@ph.email} on #{DateTime.now.to_time.strftime('%c')}"
+        @patient.signup_status = "new"
+        @password_random_suffix = rand(999999).to_s.center(6, rand(9).to_s)
         if @patient.save
           redirect_to physician_patients_path(@ph)
         else
@@ -83,6 +87,8 @@ class PatientsController < ApplicationController
       if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
         @ph = Physician.find(params[:physician_id])
         @patient = Patient.find(params[:id])
+        @patient.signup_status = "returning"
+        @patient.save(:validate => false)
 
         if @patient.update_attributes(params[:patient])
           redirect_to physician_patient_path
@@ -119,6 +125,8 @@ class PatientsController < ApplicationController
       if session[:physician_id] == 1
         @patient = Patient.find(params[:patient_id])
         @ph = Physician.find(@patient.physician_id)
+        @patient.signup_status = "returning"
+        @patient.save(:validate => false)
         
         if @patient.update_attributes(params[:patient])
           redirect_to physician_patient_path(@ph, @patient), :notice => "The patient's password was successfully reset"
@@ -130,7 +138,10 @@ class PatientsController < ApplicationController
       end
     end
     
-    
+    def patient_welcome
+      @pt = Patient.find(params[:patient_id])
+      @ph = Physician.find(@pt.physician_id)
+    end
     
 
     ############# paitent-specific methods #######
@@ -157,6 +168,8 @@ class PatientsController < ApplicationController
       if (session[:patient_id]).to_s && ((params[:patient_id]) == (session[:patient_id]).to_s)
         @patient = Patient.find(params[:patient_id])
         @ph = Physician.find(@patient.physician_id)
+        @patient.signup_status = "returning"
+        @patient.save(:validate => false)
         if @patient.update_attributes(params[:patient])
           redirect_to pt_show_path(params[:patient_id])
         else
@@ -167,9 +180,6 @@ class PatientsController < ApplicationController
       end
     end
     
-    def set_password_via_sms
-      
-    end
 
 
   end

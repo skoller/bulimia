@@ -6,7 +6,7 @@
 <%= link_to "View Active Patients", active_patients_path %></br></br></br>
 <h2>List of Physicians by email:</h2></br>
 <% @physicians.each do |ph| %>
-	</br><%= ph.email %>  <%= link_to "see patients", physician_patients_path(ph) %></br>
+	</br><%= ph.email %>    <%= link_to "View Patients", physician_patients_path(ph) %>   ||  <%= link_to "Archive this Physician", archive_a_physician_path(:physician_id => ph.id) %> </br>
 	<% end %>
 	
 	

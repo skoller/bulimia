@@ -1,5 +1,5 @@
-<%= form_for @ph, :url => { :action => "update" }, :html => {:class => "form-horizontal", :method => "put" } do |f| %>
-  <legend>Patient</legend>
+<%= form_for @ph, :html => {:class => "form-horizontal"} do |f| %>
+  <legend>Edit Account</legend>
   <% if @ph.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@ph.errors.count, "error") %> prohibited your changes from being saved:</h2>
@@ -36,12 +36,12 @@
 	<div class="control-group">
     <%= f.label :medical_specialty, :class => "control-label" %>
     <div class= "controls">
-      <%= f.text_field :speciatly %>
+      <%= f.text_field :specialty %>
     </div>
   </div>
 
 	<div class="control-group">
-    <%= f.label :email, :class => "control-label" %>
+    <%= f.label :email_for_login, :class => "control-label" %>
     <div class= "controls">
       <%= f.text_field :email %>
     </div>
@@ -51,7 +51,7 @@
 
   <div class="form-actions">
 		<%= f.button "Save Changes", :class => "btn btn-primary" %>
-    <%= link_to physician_path(@ph) do %>
+    <%= link_to physician_account_path(:physician_id => @ph.id) do %>
       <button class="btn" method="get">Go Back</button>
     <% end %>
   </div>

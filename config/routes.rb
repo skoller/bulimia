@@ -8,13 +8,15 @@ Bulimia::Application.routes.draw do
   end
   
   match "home_page" => "application#home_page", :as => "home_page"
-  match "deactivate_msg/:physician_id/:patient_id" => "physicians#deactivate_message", :as => "deactivate_message"
+  match "deactivate_pt_msg/:physician_id/:patient_id" => "physicians#deactivate_pt_message", :as => "deactivate_pt_message"
+  match "deactivate_ph_msg/:physician_id" => "physicians#deactivate_ph_message", :as => "deactivate_ph_message"
   match "ph_deactivate" => "physicians#destroy_archive", :as => "destroy_archive"
   match "pt_archive/:physician_id/:id" => "patients#archive", :as => "archive_pt"
   match "physician/:physician_id/patient_archive" => "physicians#pt_archive_index", :as => "pt_archive_index"
-  # match "admin_pt_archive/:physician_id/:id" => "patients#admin_pt_archive", :as => "admin_pt_archive"
-  #   
-  #   match "index_pt_archive/:physician_id" => "patients#index_pt_archive", :as => "index_pt_archive"
+  match "code" => "sessions#new_patient_code_verification", :as => "patient_code"
+  match "new_patient" => "sessions#new_patient_start_code_entry", :as => "new_patient_start_code_entry"
+  match "p_s" => "sessions#new_patient_password_setup", :as => "p_s"
+  
   
   # flash.now.alert=
   match 'phone/sms_handler' => "phone#sms_handler", :as => :sms_handler
@@ -24,7 +26,11 @@ Bulimia::Application.routes.draw do
   match "physician_sign_up" => "physicians#new", :as => "sign_up"
   match "physician_additional_info" => "physicians#physician_additional_info", :as => "physician_additional_info"
   match "welcome_ph_instructions/:physician_id" => "physicians#welcome_ph_instructions", :as => "welcome_ph_instructions" 
-  
+  match "unarch_pt/:id/:patient_id" => "physicians#unarchive_patient", :as => "unarchive_patient"
+  match "physician_account/:physician_id" => "physicians#physician_account", :as => "physician_account"
+  match "edit_physician_account/:physician_id" => "physicians#edit_physician_account", :as => "edit_physician_account"
+  match "physician_pswd_edit/:physician_id" => "physicians#ph_password_edit", :as => 'ph_password_edit'
+  match "physician_pswd_update/:physician_id" => "physicians#ph_password_update", :as => 'ph_password_update'
   
   
   match "patient_log_out" => "sessions#destroy_pt", :as => "patient_log_out"
@@ -33,6 +39,8 @@ Bulimia::Application.routes.draw do
   match "patient_edit/:patient_id" => "patients#patient_edit_limited", :as => "pt_edit"
   match "patient_show/:patient_id" => "patients#patient_show_limited", :as => "pt_show"
   match "patient_update/:patient_id" => "patients#patient_update_limited", :as => "pt_update"
+  match "patient_welcome/:patient_id" => "patients#patient_welcome", :as => "patient_welcome"
+  
   
   match "admin_override_pt_password_edit/:patient_id" => "patients#admin_pt_password_edit", :as => "admin_pt_pass_edit"
   match "admin_override_pt_password_update/:patient_id" => "patients#admin_pt_password_update", :as => "admin_pt_pass_update"
@@ -40,19 +48,12 @@ Bulimia::Application.routes.draw do
   match "archived_physicians" => "admin#archived_physicians", :as => "archived_physicians"
   match "archived_patients" => "admin#archived_patients", :as => "archived_patients"
   match "active_patients" => "admin#active_patients", :as => "active_patients"
+  match "deact_and_arch_pt/:patient_id" => "admin#deactivate_and_archive_patient", :as => "deactivate_and_archive_patient"
+  match "react_and_unarch_pt/:patient_id" => "admin#reactivate_and_unarchive_patient", :as => "reactivate_and_unarchive_patient"
+  match "archive_a_physician/:physician_id" => "admin#archive_a_physician", :as => "archive_a_physician"
+  match "unarchive_a_physician/:physician_id" => "admin#unarchive_a_physician", :as => "unarchive_a_physician"
   
   
-  
- 
- 
- 
- 
-  # match 'phone/day' => "phone#sms_handler", :as => :day
-  #   match 'phone/food' => "phone#sms_handler", :as => :food
-  #   match 'phone/time' => "phone#sms_handler", :as => :time
-  #   match 'phone/bvl' => "phone#sms_handler", :as => :bvl
-  #   match 'phone/note' => "phone#sms_handler", :as => :note
-  #   match 'phone/error' => "phone#sms_handler", :as => :error
     
   
   # The priority is based upon order of creation:

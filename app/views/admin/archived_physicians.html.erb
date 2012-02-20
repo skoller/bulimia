@@ -1,6 +1,5 @@
 <h1>Archived Physician Accounts</h1>
 
-<% @physicians_archive.each do |ph| %>
-	</br><%= ph.email %> <%= ph.arch_id %></br>
-	<% end %>
-	
+	<% @physicians_archive.each do |ph| %>
+		</br><%= ph.email %>  Archive ID: <%= ph.arch_id %>   <%= link_to "View Patients", physician_patients_path(ph) %>   ||  <%= link_to "Unarchive this Physician", unarchive_a_physician_path(:physician_id => ph.id) %> </br>
+		<% end %>

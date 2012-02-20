@@ -1,7 +1,11 @@
-<%= link_to "Back to Patients Listing", physician_patients_path(@ph) %>
+     ||     <%= link_to "Back to Patients Listing", physician_patients_path(@ph) %>
 
 <h2>Archived Patient Accounts</h2>
 
 <% @pt_arch.each do |pt| %>
-	</br><%= pt.phone_number %>, Patient ID: <%= pt.id %></br>
+	</br> <%= pt.last_name_first %> <%= pt.phone_number %> Account Status: <%= pt.billing_status %>
+	
+	<%= link_to "Unarchive", unarchive_patient_path(:patient_id => pt.id, :id => @ph.id) %>
+	
+	</br>
 	<% end %>

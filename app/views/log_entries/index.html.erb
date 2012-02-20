@@ -1,4 +1,4 @@
-<h2>Eating Behavior Log</h2><h2> <% if @physician_view%> <%= @patient.first_name + " " + @patient.last_name %> <% end %></h2>
+<h2>Eating Behavior Log</h2><h2> <% if @physician_or_admin_view%> <%= @patient.first_name + " " + @patient.last_name %> <% end %></h2>
 <br />
 <table class="table table-bordered table-striped">
   <thead>
@@ -19,7 +19,7 @@
   <tbody>
   <% @log_entries.each do |log_entry| %>
     <tr>
-      <td><%= log_entry.day_web_display %></td>
+      <td><%= log_entry.day_web_display %></br><%= log_entry.year_web_display %></td>
       <td><%= log_entry.time_web_display %></td>
 			<td><%= log_entry.location %></td>
       <td><%= log_entry.food %></td>
@@ -64,7 +64,7 @@
 
 </table>
 <div class="form-actions">
-	<% if @physician_view %>
+	<% if @physician_or_admin_view %>
   	<%= link_to physician_patients_path(@ph) do %>
 	      <button class="btn">&lt;&lt; Return to Patient Listing</button>
 	  <% end %>

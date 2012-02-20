@@ -15,4 +15,4 @@
 </div>
 
 
-<%= link_to "Deactivate Account", deactivate_message_path(:patient_id => @patient.id, :physician_id => @ph.id), confirm: 'Are you sure you want to deactivate your account?'%>
+<%= link_to "Deactivate Account", deactivate_pt_message_path(:patient_id => @patient.id, :physician_id => @ph.id), confirm: 'Are you sure you want to deactivate your account?'%>

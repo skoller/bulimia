@@ -1,0 +1,7 @@
+<p>Please send an email to cancel@bivola.com indicating that you would like to cancel this account. Within 72 hours, this account will be deactivated and all billing associated with this account will cease. All patient data associated with this account will be sent to both doctor and patient electronically via email. The information will be accessible with your Bivola password. Once this data is released to you, Bivola does not take responsibility for the security of these data and does not guarantee that a copy of these data will remain saved in Bivola's system. Whether you were satisfied or dissatisfied with Bivola, we would appreciate your feedback. We are always looking to make improvements to our product. Thank you for using Bivola.</p>
+
+<% if session[:patient_id] %>
+<%= link_to "OK", pt_show_path(:patient_id => @pt.id) %>
+<% elsif session[:physician_id] %>
+<%= link_to "OK", physician_patient_path(@ph, @pt) %>
+<% end %>
