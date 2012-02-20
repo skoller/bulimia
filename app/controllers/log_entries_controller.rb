@@ -6,10 +6,12 @@ class LogEntriesController < ApplicationController
   def index
     if session[:physician_id]
       @physician_view = true
+    elsif session[:patient_id]
+      @patient_view = true
     end
     @ph = Physician.find(params[:physician_id])
     @patient = @ph.patients.find(params[:patient_id])
-    @log_entries = @patient.log_entries
+    @log_entries = @patient.log_entries.order('date DESC')
     respond_to do |format|
         format.html
         format.pdf do
@@ -19,7 +21,7 @@ class LogEntriesController < ApplicationController
                                 disposition: "inline"
                                 
         end
-      end
+    end
   end
 
   def show
@@ -45,7 +47,7 @@ class LogEntriesController < ApplicationController
     @patient = @ph.patients.find(params[:patient_id])
     @log_entry = @patient.log_entries.build(params[:log_entry])
     if @log_entry.save
-      redirect_to physician_patient_log_entries_path(@ph, @patient), notice: 'Log Entry was successfully created.'
+      redirect_to physician_patient_log_entry_path(@ph, @patient, @log_entry), notice: 'Log Entry was successfully created.'
     else
       render action:'new'
     end
@@ -57,7 +59,7 @@ class LogEntriesController < ApplicationController
     @log_entry = @patient.log_entries.find(params[:id])
     
     if @log_entry.update_attributes(params[:log_entry])
-      redirect_to physician_patient_log_entries_path(@ph, @patient), notice: 'Log entry was successfully updated.'
+      redirect_to physician_patient_log_entry_path(@ph, @patient, @log_entry), notice: 'Log entry was successfully updated.'
     else
       render action: "edit"
     end

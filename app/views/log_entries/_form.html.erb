@@ -71,8 +71,8 @@
   <div class="form-actions">
     <% mode == :edit ? button_text = "Save Changes to Log Entry" : button_text = "Save Log Entry" %>
     <%= f.button button_text, :class => "btn btn-primary" %>
-    <%= link_to physician_patient_log_entries_path(@ph, @patient) do %>
-      <button class="btn" method="get">Go Back</button>
+    <%= link_to physician_patient_log_entry_path(@ph, @patient, @log_entry) do %>
+      <button class="btn" method="get">Cancel</button>
     <% end %>
   </div>
 

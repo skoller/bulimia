@@ -158,7 +158,7 @@ class PatientsController < ApplicationController
         @patient = Patient.find(params[:patient_id])
         @ph = Physician.find(@patient.physician_id)
         if @patient.update_attributes(params[:patient])
-          redirect_to physician_patient_path(@ph, @patient)
+          redirect_to pt_show_path(params[:patient_id])
         else
           render :action => "patient_edit_limited"
         end

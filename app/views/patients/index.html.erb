@@ -29,6 +29,11 @@
           <button class="btn">View Patient</button>
         <% end %>
       </td>
+			<td>
+        <%= link_to physician_patient_log_entries_path(@ph, patient) do %>
+          <button class="btn btn-info">View Log</button>
+        <% end %>
+      </td>
       <td>
         <%= link_to edit_physician_patient_path(@ph, patient) do %>
           <button class="btn btn-warning">Edit Patient</button>
@@ -39,11 +44,12 @@
           <button class="btn btn-danger">Archive Patient</button>
         <% end %>
       </td>
-      <td>
-        <%= link_to physician_patient_log_entries_path(@ph, patient) do %>
-          <button class="btn btn-info">View Log</button>
+			<td>
+        <%= link_to deactivate_message_path(:physician_id => @ph.id, :patient_id => patient.id), confirm: 'Are you sure you want to deactivate this patient\'s account?' do %>
+          <button class="btn btn-danger">Cancel Account</button>
         <% end %>
       </td>
+      
     </tr>
   <% end %>
 </tbody>

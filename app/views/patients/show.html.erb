@@ -25,4 +25,4 @@
     <button class="btn btn-danger">Archive Patient</button>
   <% end %>
 </div>
-<%= link_to "Deactivate Patient Account", deactivate_message_path(:patient_id => @patient.id, :physician_id => @ph.id), confirm: 'Are you sure?'%>
+<%= link_to "Deactivate Patient Account", deactivate_message_path(:patient_id => @patient.id, :physician_id => @ph.id), confirm: 'Are you sure you want to deactivate this patient account?'%>

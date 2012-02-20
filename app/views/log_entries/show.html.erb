@@ -18,7 +18,7 @@
   <%= link_to edit_physician_patient_log_entry_path(@ph, @patient, @log_entry)  do %>
     <button class="btn btn-warning">Edit this Log Entry</button>
   <% end %>
-  <%= link_to physician_patient_log_entry_path(@ph, @patient, @log_entry), confirm: 'Are you sure?', method: :delete  do %>
+  <%= link_to physician_patient_log_entry_path(@ph, @patient, @log_entry), confirm: 'Are you sure you want to delete this log entry?', method: :delete  do %>
     <button class="btn btn-danger">Delete this entry</button>
   <% end %>
 </div>

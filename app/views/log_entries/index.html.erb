@@ -1,4 +1,4 @@
-<h2>Eating Behavior Log</h2>
+<h2>Eating Behavior Log</h2><h2> <% if @physician_view%> <%= @patient.first_name + " " + @patient.last_name %> <% end %></h2>
 <br />
 <table class="table table-bordered table-striped">
   <thead>
@@ -19,8 +19,8 @@
   <tbody>
   <% @log_entries.each do |log_entry| %>
     <tr>
-      <td><%= log_entry.day %></td>
-      <td><%= log_entry.time %></td>
+      <td><%= log_entry.day_web_display %></td>
+      <td><%= log_entry.time_web_display %></td>
 			<td><%= log_entry.location %></td>
       <td><%= log_entry.food %></td>
       <td><% if log_entry.binge == true %>
@@ -53,7 +53,7 @@
         <% end %>
       </td>
       <td>
-        <%= link_to physician_patient_log_entry_path(@ph, @patient, log_entry), confirm: 'Are you sure?', method: :delete  do %>
+        <%= link_to physician_patient_log_entry_path(@ph, @patient, log_entry), confirm: 'Are you sure you want to delete this log entry?', method: :delete  do %>
           <button class="btn btn-danger">Delete</button>
         <% end %>
       </td>
@@ -68,19 +68,24 @@
   	<%= link_to physician_patients_path(@ph) do %>
 	      <button class="btn">&lt;&lt; Return to Patient Listing</button>
 	  <% end %>
-	<% else %>
-		<%= link_to pt_edit_path(:patient_id => @patient.id) do %>	
-		<button class="btn">Edit Password or Phone Number</button>
-		<% end %>
+	<% end %>
+	
+		<%= link_to new_physician_patient_log_entry_path(@ph, @patient)  do %>
+	      <button class="btn">Create New Entry</button>
+	  <% end %>
+
+	
+		<%= link_to physician_patient_log_entries_path(@ph, @patient, format: "pdf") do %>
+	      <button class="btn">Generate Printable Log (PDF)</button>
+	  <% end %>
+	
+	<% if @patient_view %>
 		<%= link_to pt_show_path(:patient_id => @patient.id) do %>	
 		<button class="btn">View Account Information</button>
 		<% end %>
+		<%= link_to pt_edit_path(:patient_id => @patient.id, :log_root => @log_root) do %>	
+		<button class="btn">Edit Password or Phone Number</button>
+		<% end %>
 	<% end %>
-	
-  <%= link_to physician_patient_log_entries_path(@ph, @patient, format: "pdf") do %>
-      <button class="btn">Generate Printable Log (PDF)</button>
-  <% end %>
-  <%= link_to new_physician_patient_log_entry_path(@ph, @patient)  do %>
-      <button class="btn">Create New Entry</button>
-  <% end %>
+			
 </div>
