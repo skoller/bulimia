@@ -15,7 +15,9 @@ Bulimia::Application.routes.draw do
   match "physician/:physician_id/patient_archive" => "physicians#pt_archive_index", :as => "pt_archive_index"
   match "code" => "sessions#new_patient_code_verification", :as => "patient_code"
   match "new_patient" => "sessions#new_patient_start_code_entry", :as => "new_patient_start_code_entry"
-  match "p_s" => "sessions#new_patient_password_setup", :as => "p_s"
+  match "new_patient_password_setup/:pt_id" => "sessions#new_patient_password_setup", :as => "new_patient_password_setup"
+  match "p_set/:pt_id" => "sessions#password_set", :as => "password_set"
+  
   
   
   # flash.now.alert=
