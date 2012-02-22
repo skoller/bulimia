@@ -9,16 +9,18 @@ class SessionsController < ApplicationController
   end
 
   def create_ph_session
-    ph = Physician.find_by_email(params[:email])
-    if (ph.email == 'dev@bvl.com') && ph.authenticate(params[:password])
-      session[:physician_id] = ph.id
+    ph = Physician.where(:email => (params[:email])).first
+    unless ph == nil
+     if (ph.email == 'dev@bvl.com') && ph.authenticate(params[:password])
+      session[:physician_id] = 1
       redirect_to admin_path(ph), notice: "Welcome Administrator!"
-    elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state
+     elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state
       session[:physician_id] = ph.id
       redirect_to physician_patients_path(ph), notice: "Logged in!"
-    elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state == nil
+     elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state == nil
       session[:physician_id] = ph.id
       redirect_to physician_additional_info_path(:id => ph.id)
+     end
     else
       render "new_physician_session", notice: "Invalid email or password"
     end
@@ -30,19 +32,21 @@ class SessionsController < ApplicationController
   def new_patient_code_verification
     pt_phone_number = Patient.where(:phone_number => params[:phone_number]).first
     pt_code = Patient.where(:start_code => params[:start_code]).first
-   if pt_phone_number.signup_status = "returning"
-     render 'new_patient_session'
-   end
-    if pt_code.phone_number == pt_phone_number.phone_number
-      session[:start] = pt_code.id
-      redirect_to new_patient_password_setup_path(:pt_id => pt_code.id)
-    elsif pt_code.phone_number && !pt_phone_number.phone_number
-      render 'new_patient_start_code_entry', flash.now.alert = "Bivola does not recognize the start code you provided."
-    elsif !pt_code.phone_number && pt_phone_number.phone_number
-      render 'new_patient_start_code_entry', flash.now.alert = "Bivola does not recognize the phone number you provided."  
-    else
-      render 'new_patient_start_code_entry', flash.now.alert = "Bivola does not recognize the phone number or start code you provided."  
-    end
+    unless pt_phone_number == nil || pt_code == nil
+       if pt_phone_number.signup_status = "returning"
+         render 'new_patient_session'
+       end
+        if pt_code.phone_number == pt_phone_number.phone_number
+          session[:start] = pt_code.id
+          redirect_to new_patient_password_setup_path(:pt_id => pt_code.id)
+        elsif pt_code.phone_number && !pt_phone_number.phone_number
+          render 'new_patient_start_code_entry', flash.now.alert = "Bivola does not recognize the start code you provided."
+        elsif !pt_code.phone_number && pt_phone_number.phone_number
+          render 'new_patient_start_code_entry', flash.now.alert = "Bivola does not recognize the phone number you provided."  
+        end
+      else
+          render 'new_patient_start_code_entry', flash.now.alert = "Bivola does not recognize the phone number or start code you provided."  
+      end
       
   end
   

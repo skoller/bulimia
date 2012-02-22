@@ -19,6 +19,7 @@ class PatientsController < ApplicationController
       @patient = Patient.find(params[:id])
       @patient.activity_history = @patient.activity_history + "  >>>>>> Archived by #{@ph.email} on #{DateTime.now.to_time.strftime('%c')}"
       @patient.archive = true
+      @patient.phone_number = ""
       if @patient.save(:validate => false)
         redirect_to pt_archive_index_path(:physician_id => @ph.id)
       else
@@ -76,7 +77,7 @@ class PatientsController < ApplicationController
         @password_random_suffix = rand(999999).to_s.center(6, rand(9).to_s)
         if @patient.save
           session[:start_code_patient_id] = @patient.id
-          redirect_to "http://bvl.herokuapp.com/phone/sms_handler", :To => '3105982903', :From => @patient.phone_number, :Body => "this is the body"
+          redirect_to "http://bvl.herokuapp.com/phone/sms_handler", :method => 'post', :To => '3105982903', :From => @patient.phone_number, :Body => "this is the body"
         else
           render :action => "new"
         end
