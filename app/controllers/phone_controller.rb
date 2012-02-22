@@ -3,6 +3,13 @@ class PhoneController < ApplicationController
   BASE_DIR = "phone/" 
 
   def sms_handler
+    
+    
+    if session[:start_code_patient_id]
+      @patient = Patient.where(:id => (session[:start_code]).to_s)
+      render BASE_DIR + "start_code_test.xml"
+      return false
+    end
 
     ######### number / patient identification
     raw_number = params['From']

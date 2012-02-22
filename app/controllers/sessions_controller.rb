@@ -85,6 +85,7 @@ class SessionsController < ApplicationController
         session[:patient_id] = pt.id
         pt.signup_status = "returning"
         pt.save(:validate => false)
+        session[:start] = nil
         redirect_to patient_welcome_path(:patient_id => pt.id)
       else
         redirect_to home_page_path

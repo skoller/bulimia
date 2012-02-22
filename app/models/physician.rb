@@ -3,4 +3,12 @@ class Physician < ActiveRecord::Base
     has_secure_password
     validates_presence_of :password, :on => :create
     has_many :patients
+    
+    
+    
+    def full_name
+      self.first_name + " " + self.last_name
+    end
+    
+    
 end

@@ -72,15 +72,24 @@ class PatientsController < ApplicationController
         @patient = @ph.patients.build(params[:patient])
         @patient.activity_history = "*****Account created by #{@ph.email} on #{DateTime.now.to_time.strftime('%c')}"
         @patient.signup_status = "new"
+        @patient.start_code = "sms start"
         @password_random_suffix = rand(999999).to_s.center(6, rand(9).to_s)
         if @patient.save
-          redirect_to physician_patients_path(@ph)
+          session[:start_code_patient_id] = @patient.id
+          redirect_to "http://bvl.herokuapp.com/phone/sms_handler", :To => '3105982903', :From => @patient.phone_number, :Body => "this is the body"
         else
           render :action => "new"
         end
       else
         patient_restriction
       end
+    end
+    
+    def after_start_code_web_handler
+      pt = Patient.where(:id => (session[:start_code_patient_id].to_s))
+      ph_id = pt.physician_id
+      @ph = Physician.where(:id => ph_id)
+      redirect_to physician_patients_path(@ph)
     end
 
     def update
