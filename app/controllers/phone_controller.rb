@@ -103,14 +103,14 @@ class PhoneController < ApplicationController
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         @ch = @patient.convo_handler
         if ((params['Body']).to_f == 0) && ((params['Body']).delete(" ") == "0")
-          @log_e.date = DateTime.now- pt_time_zone(params['FromState'])
+          @log_e.date = DateTime.now + pt_time_zone(params['FromState'])
           @log_e.save(:validate => false)
           @ch.state = 'food'
           @ch.save(:validate => false)
           render BASE_DIR + "food.xml"
           return false
         elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
-          @log_e.date = ( DateTime.now - pt_time_zone(params['FromState']) - ((params['Body']).to_f).minutes )
+          @log_e.date = ( DateTime.now + pt_time_zone(params['FromState']) - ((params['Body']).to_f).minutes )
           @log_e.save(:validate => false)
           @ch.state = 'food'
           @ch.save(:validate => false)
@@ -137,14 +137,14 @@ class PhoneController < ApplicationController
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         @ch = @patient.convo_handler
         if ((params['Body']).to_f == 0) && ((params['Body']).delete(" ") == "0")
-          @log_e.date = DateTime.now
+          @log_e.date = DateTime.now + pt_time_zone(params['FromState'])
           @log_e.save(:validate => false)
           @ch.state = 'food'
           @ch.save(:validate => false)
           render BASE_DIR + "food.xml"
           return false
         elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
-          @log_e.date = ( DateTime.now - ((params['Body']).to_f).hours )
+          @log_e.date = ( DateTime.now + pt_time_zone(params['FromState']) - ((params['Body']).to_f).hours )
           @log_e.save(:validate => false)
           @ch.state = 'food'
           @ch.save(:validate => false)
@@ -473,7 +473,7 @@ class PhoneController < ApplicationController
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           @ch = @patient.convo_handler
           if ((params['Body']).to_f == 0) && ((params['Body']).delete(" ") == "0")
-            @log_e.date = DateTime.now
+            @log_e.date = DateTime.now + pt_time_zone(params['FromState'])
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
@@ -484,7 +484,7 @@ class PhoneController < ApplicationController
             render BASE_DIR + "lax_dose.xml"
             return false
           elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
-            @log_e.date = ( DateTime.now - ((params['Body']).to_f).minutes )
+            @log_e.date = ( DateTime.now + pt_time_zone(params['FromState']) - ((params['Body']).to_f).minutes )
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
@@ -514,7 +514,7 @@ class PhoneController < ApplicationController
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           @ch = @patient.convo_handler
           if ((params['Body']).to_f == 0) && ((params['Body']).delete(" ") == "0")
-            @log_e.date = DateTime.now
+            @log_e.date = DateTime.now + pt_time_zone(params['FromState'])
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
@@ -525,7 +525,7 @@ class PhoneController < ApplicationController
             render BASE_DIR + "lax_dose.xml"
             return false
           elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
-            @log_e.date = ( DateTime.now - ((params['Body']).to_f).hours )
+            @log_e.date = ( DateTime.now + pt_time_zone(params['FromState']) - ((params['Body']).to_f).hours )
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
@@ -708,7 +708,7 @@ class PhoneController < ApplicationController
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           @ch = @patient.convo_handler
           if ((params['Body']).to_f == 0) && ((params['Body']).delete(" ") == "0")
-            @log_e.date = DateTime.now
+            @log_e.date = DateTime.now + pt_time_zone(params['FromState'])
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
@@ -719,7 +719,7 @@ class PhoneController < ApplicationController
             render BASE_DIR + "vom_note.xml"
             return false
           elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
-            @log_e.date = ( DateTime.now - ((params['Body']).to_f).minutes )
+            @log_e.date = ( DateTime.now + pt_time_zone(params['FromState']) - ((params['Body']).to_f).minutes )
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
@@ -750,7 +750,7 @@ class PhoneController < ApplicationController
           @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
           @ch = @patient.convo_handler
           if ((params['Body']).to_f == 0) && ((params['Body']).delete(" ") == "0")
-            @log_e.date = DateTime.now
+            @log_e.date = DateTime.now + pt_time_zone(params['FromState'])
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
@@ -761,7 +761,7 @@ class PhoneController < ApplicationController
             render BASE_DIR + "vom_note.xml"
             return false
           elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
-            @log_e.date = ( DateTime.now - ((params['Body']).to_f).hours )
+            @log_e.date = ( DateTime.now + pt_time_zone(params['FromState']) - ((params['Body']).to_f).hours )
             @log_e.location = "N/A"
             @log_e.food = "N/A"
             @log_e.binge = false
