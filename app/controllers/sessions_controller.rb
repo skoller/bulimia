@@ -13,18 +13,18 @@ class SessionsController < ApplicationController
     unless ph == nil
      if (ph.email == 'dev@bvl.com') && ph.authenticate(params[:password])
       session[:physician_id] = 1
-      redirect_to admin_path(ph), flash[:notice] = "Welcome Administrator!"
+      redirect_to admin_path(ph)
      elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state
       session[:physician_id] = ph.id
-      redirect_to physician_patients_path(ph), flash[:notice] = "Logged in!"
+      redirect_to physician_patients_path(ph)
      elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state == nil
       session[:physician_id] = ph.id
       redirect_to physician_additional_info_path(:id => ph.id)
     elsif !ph.authenticate(params[:password])
-      render "new_physician_session", flash[:notice] = "Invalid password"
+      render "new_physician_session" 
      end
     else
-      render "new_physician_session", flash[:notice] = "Invalid email or password"
+      render "new_physician_session"
     end
   end
   

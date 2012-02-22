@@ -103,14 +103,14 @@ class PhoneController < ApplicationController
         @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
         @ch = @patient.convo_handler
         if ((params['Body']).to_f == 0) && ((params['Body']).delete(" ") == "0")
-          @log_e.date = DateTime.now
+          @log_e.date = DateTime.now- pt_time_zone(params['FromState'])
           @log_e.save(:validate => false)
           @ch.state = 'food'
           @ch.save(:validate => false)
           render BASE_DIR + "food.xml"
           return false
         elsif ((params['Body']).to_f.class == Float) && ((params['Body']).to_f != 0)
-          @log_e.date = ( DateTime.now - ((params['Body']).to_f).minutes )
+          @log_e.date = ( DateTime.now - pt_time_zone(params['FromState']) - ((params['Body']).to_f).minutes )
           @log_e.save(:validate => false)
           @ch.state = 'food'
           @ch.save(:validate => false)
@@ -870,6 +870,69 @@ class PhoneController < ApplicationController
         entry.vomit = false
         entry.save(:validate => false)
       end
+    end
+    
+    ################# time zone calc ########
+    def pt_time_zone(state)
+       state_to_utc = {
+          "AL" => -6,
+          "AK" => -9,
+          "AS" => -11,
+          "AZ" => -7,
+          "AR" => -6,
+          "CA" => -8,
+          "CO" => -7,
+          "CT" => -5,
+          "DE" => -5,
+          "FL" => -5,
+          "GA" => -5,
+          "GU" => 10,
+          "HI" => -10,
+          "ID" => -7,
+          "IL" => -6,
+          "IN" => -5,
+          "IA" => -6,
+          "KS" => -6,
+          "KY" => -5,
+          "LA" => -6,
+          "ME" => -5,
+          "MD" => -5,
+          "MA" => -5,
+          "MI" => -5,
+          "MN" => -6,
+          "MS" => -6,
+          "MO" => -6,
+          "MT" => -7,
+          "NE" => -6,
+          "NV" => -8,
+          "NH" => -5,
+          "NJ" => -5,
+          "NM" => -7,
+          "NY" => -5,
+          "NC" => -5,
+          "ND" => -6,
+          "MP" => 10,
+          "OH" => -5,
+          "OK" => -6,
+          "OR" => -8,
+          "PA" => -5,
+          "PR" => -4,
+          "RI" => -5,
+          "SC" => -5,
+          "SD" => -6,
+          "TN" => -6,
+          "UT" => -7,
+          "VT" => -5,
+          "VA" => -5,
+          "VI" => -4,
+          "WA" => -8,
+          "DC" => -5,
+          "WV" => -5,
+          "WI" => -6,
+          "WY" => -7
+        }
+        x = state_to_utc[state]
+        return x.hours
     end
 
 
