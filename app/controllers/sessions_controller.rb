@@ -125,7 +125,7 @@ class SessionsController < ApplicationController
         return false
       end
     else
-      redirect_to home_page_path
+      redirect_to patient_log_in_path
       return false
     end
   end
