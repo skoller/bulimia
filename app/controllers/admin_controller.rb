@@ -42,6 +42,7 @@ class AdminController < ApplicationController
     x = @ph.patients
     x.each do |pt|
       pt.doctor_status = "deactivated"
+      pt.archive = true
       pt.save(:validate => false)
     end
     @ph.archive = true
@@ -57,6 +58,7 @@ class AdminController < ApplicationController
     x = @ph.patients
     x.each do |pt|
       pt.doctor_status = "Active"
+      pt.archive = nil
       pt.save(:validate => false)
     end
     @ph.archive = nil
