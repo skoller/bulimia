@@ -73,11 +73,25 @@ class PatientsController < ApplicationController
         @patient = @ph.patients.build(params[:patient])
         @patient.activity_history = "*****Account created by #{@ph.email} on #{DateTime.now.to_time.strftime('%c')}"
         @patient.signup_status = "new"
-        @patient.start_code = "sms start"
+        @patient.start_code = rand(999999).to_s.center(6, rand(9).to_s)
         @password_random_suffix = rand(999999).to_s.center(6, rand(9).to_s)
         if @patient.save
-          session[:start_code_patient_id] = @patient.id
-          redirect_to "http://bvl.herokuapp.com/phone/sms_handler", :method => 'post', :To => '3105982903', :From => @patient.phone_number, :Body => "this is the body"
+
+              number_to_send_to = @patient.phone_number
+
+              twilio_sid = "bvl_app_1"
+              twilio_token = "bvl_app_1_token"
+              twilio_phone_number = "3105982903"
+
+              @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
+
+              @twilio_client.account.sms.messages.create(
+                :from => "+1#{twilio_phone_number}",
+                :to => number_to_send_to,
+                :body => "Your Bivola account is now active. Visit www.bvl.herokuapp.com and use '#{@patient.start_code}' as your start code to sign up for online access to your diary entries."
+              )
+          
+          redirect_to physician_patients_path(@ph)
         else
           render :action => "new"
         end
@@ -85,13 +99,7 @@ class PatientsController < ApplicationController
         patient_restriction
       end
     end
-    
-    def after_start_code_web_handler
-      pt = Patient.where(:id => (session[:start_code_patient_id].to_s))
-      ph_id = pt.physician_id
-      @ph = Physician.where(:id => ph_id)
-      redirect_to physician_patients_path(@ph)
-    end
+  
 
     def update
       if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
