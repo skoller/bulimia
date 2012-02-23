@@ -77,7 +77,7 @@ class PatientsController < ApplicationController
         @password_random_suffix = rand(999999).to_s.center(6, rand(9).to_s)
         if @patient.save
           session[:patient_start] = @patient.id
-          redirect_to "phone/sms_handler"
+          redirect_to sms_handler_path
         else
           render :action => "new"
         end

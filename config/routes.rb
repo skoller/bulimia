@@ -21,7 +21,7 @@ Bulimia::Application.routes.draw do
   
   
   # flash.now.alert=
-  match 'phone/sms_handler' => "phone#sms_handler", :as => :sms_handler
+  match 'phone/sms_handler' => "phone#sms_handler", :as => "sms_handler"
   match 'after_start_code_web_handler' => "patients#after_start_code_web_handler", :as => "after_start_code_web_handler"
   
   match "physician_log_out" => "sessions#destroy_ph", :as => "log_out"
