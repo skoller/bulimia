@@ -11,7 +11,7 @@ class LogEntriesController < ApplicationController
     end
     @ph = Physician.find(params[:physician_id])
     @patient = @ph.patients.find(params[:patient_id])
-    @log_entries = @patient.log_entries.order('date DESC')
+    @log_entries = @patient.log_entries.order('date ASC')
     respond_to do |format|
         format.html
         format.pdf do
