@@ -89,11 +89,14 @@ class SessionsController < ApplicationController
 
   def create_pt_session
     pt = Patient.where(:phone_number => params[:phone_number]).first
-    ph = Physician.find(pt.physician_id)
-    if ph.id == nil && ph.arch_id
-      render "doctor_deactivated"
-      return false
+    if pt
+       ph = Physician.find(pt.physician_id)
+       if ph.id == nil && ph.arch_id
+         render "doctor_deactivated"
+         return false
+       end
     end
+    
     if pt
       if pt.signup_status == "returning"
         if pt && pt.authenticate(params[:password])
