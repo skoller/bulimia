@@ -7,7 +7,7 @@ class PhoneController < ApplicationController
     
     if session[:patient_start]
       @patient = Patient.where(:id => (session[:patient_start]).to_s).first
-      @ph = Physician.find(:id => @patient.physician_id)
+      @ph = Physician.where(:id => @patient.physician_id).first
       number_to_send_to = @patient.phone_number
 
       twilio_sid = "bvl_app_1"
