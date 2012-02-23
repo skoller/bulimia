@@ -5,9 +5,23 @@ class PhoneController < ApplicationController
   def sms_handler
     
     
-    if session[:start_code_patient_id]
-      @patient = Patient.where(:id => (session[:start_code]).to_s)
-      render BASE_DIR + "start_code_test.xml"
+    if session[:patient_start]
+      @patient = Patient.where(:id => (session[:patient_start]).to_s)
+      @ph = Physician.find(:id => @patient.physician_id)
+      number_to_send_to = @patient.phone_number
+
+      twilio_sid = "bvl_app_1"
+      twilio_token = "bvl_app_1_token"
+      twilio_phone_number = "3105982903"
+
+      @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
+
+      @twilio_client.account.sms.messages.create(
+        :from => "+1#{twilio_phone_number}",
+        :to => number_to_send_to,
+        :body => "Your Bivola account is now active. Visit www.bvl.herokuapp.com and use '#{@patient.start_code}' as your start code to sign up for online access to your diary entries."
+      )
+      redirect_to physician_patients_path(@ph)
       return false
     end
 

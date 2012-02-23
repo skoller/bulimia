@@ -61,6 +61,7 @@ class SessionsController < ApplicationController
     if (session[:start]).to_s == @patient.id.to_s
     ############ CURRENTLY @patient evals to nil
       if @patient.update_attributes(params[:patient])
+        session[:start] = nil
         redirect_to patient_matched_path(:phone_number => @patient.phone_number)
       else
         redirect_to new_patient_password_setup_path(:pt_id => @patient.id)

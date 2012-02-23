@@ -76,22 +76,8 @@ class PatientsController < ApplicationController
         @patient.start_code = rand(999999).to_s.center(6, rand(9).to_s)
         @password_random_suffix = rand(999999).to_s.center(6, rand(9).to_s)
         if @patient.save
-
-              number_to_send_to = @patient.phone_number
-
-              twilio_sid = "bvl_app_1"
-              twilio_token = "bvl_app_1_token"
-              twilio_phone_number = "3105982903"
-
-              @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
-
-              @twilio_client.account.sms.messages.create(
-                :from => "+1#{twilio_phone_number}",
-                :to => number_to_send_to,
-                :body => "Your Bivola account is now active. Visit www.bvl.herokuapp.com and use '#{@patient.start_code}' as your start code to sign up for online access to your diary entries."
-              )
-          
-          redirect_to physician_patients_path(@ph)
+          session[:patient_start] = @patient.id
+          redirect_to "phone/sms_handler"
         else
           render :action => "new"
         end
