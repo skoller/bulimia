@@ -808,28 +808,28 @@ class PhoneController < ApplicationController
           unless (params["Body"]).delete(" ") == ""
             if ((params['Body']) =~ /\#/ ) && (@ch.state == "vom_note")
               @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-              @log_e.food = (params['Body']).squeeze(" ").tr('/#', '')
+              @log_e.personal_notes = (params['Body']).squeeze(" ").tr('/#', '')
               @log_e.save(:validate => false)
               render BASE_DIR + "thank_you.xml"
               @ch.drop_it_like_its_hot
               return false
             elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "vom_note")
                @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-               @log_e.food = (params['Body']).squeeze(" ")
+               @log_e.personal_notes = (params['Body']).squeeze(" ")
                @log_e.save(:validate => false)
                @ch.state = "continue_vom_note"
                @ch.save(:validate => false)
                return false
             elsif !((params['Body']) =~ /\#/ ) && (@ch.state == "continue_vom_note")
                @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-               @log_e.food = @log_e.food + " " + (params['Body']).squeeze(" ")
+               @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ")
                @log_e.save(:validate => false)
                @ch.state = "continue_vom_note"
                @ch.save(:validate => false)
                return false
              elsif ((params['Body']) =~ /\#/ ) && (@ch.state == "continue_vom_note")
                @log_e = LogEntry.where( :convo_handler_id => @patient.convo_handler.id ).first
-               @log_e.food = @log_e.food + " " + (params['Body']).squeeze(" ").tr('/#', '')
+               @log_e.personal_notes = @log_e.personal_notes + " " + (params['Body']).squeeze(" ").tr('/#', '')
                @log_e.save(:validate => false)
                render BASE_DIR + "thank_you.xml"
                @ch.drop_it_like_its_hot
