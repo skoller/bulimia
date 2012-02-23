@@ -10,8 +10,8 @@ class PhoneController < ApplicationController
       @ph = Physician.where(:id => @patient.physician_id).first
       number_to_send_to = @patient.phone_number
 
-      twilio_sid = "bvl_app_1"
-      twilio_token = "bvl_app_1_token"
+      twilio_sid = "AC0e331b7fa11f13be73a32e5311a74969"
+      twilio_token = "e948aaf8caad373ae54918c175fd8786"
       twilio_phone_number = "3105982903"
 
       @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
