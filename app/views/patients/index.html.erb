@@ -53,8 +53,8 @@
       </td>
     <% if session[:physician_id] == 1 %>
     <td>
-			<%= link_to physician_patient_path(@ph, patient), confirm: 'Are you sure you want to archive this patient?', method: :delete do %>
-        <button class="btn btn-danger">Archive Patient</button>
+			<%= link_to physician_patient_path(@ph, patient), confirm: 'Are you sure you want to delete this patient?', method: :delete do %>
+        <button class="btn btn-danger">Delete Patient</button>
       <% end %>
     </td>
     <% end %>

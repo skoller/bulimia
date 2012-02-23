@@ -6,7 +6,7 @@ class PhoneController < ApplicationController
     
     
     if session[:patient_start]
-      @patient = Patient.where(:id => (session[:patient_start]).to_s)
+      @patient = Patient.where(:id => (session[:patient_start]).to_s).first
       @ph = Physician.find(:id => @patient.physician_id)
       number_to_send_to = @patient.phone_number
 
