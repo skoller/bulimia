@@ -14,8 +14,10 @@ class PhysiciansController < ApplicationController
     @physician = Physician.new(params[:physician])
     if @physician.save
       redirect_to matched_path(params[:physician])
+      return false
     else
       render 'new'
+      return false
     end
   end
 
@@ -57,19 +59,24 @@ class PhysiciansController < ApplicationController
       end
       if (@ph.update_attributes(params[:physician]))
         redirect_to physician_account_path(:physician_id => @ph.id), :notice => "Your updates were successful."
+        return false
       else
         redirect_to :action => 'edit_physician_account'
+        return false
       end
     elsif ((session[:physician_id]).to_s && ((params[:id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
       @ph = Physician.find(params[:id])
       if @ph.first_name == nil
         (@ph.update_attributes(params[:physician]))
         redirect_to welcome_ph_instructions_path(:physician_id => @ph.id)
+        return false
       elsif @ph.first_name
         (@ph.update_attributes(params[:physician]))
         redirect_to physician_patients_path(@ph)
+        return false
       else
           redirect_to :action => 'physician_additional_information'
+          return false
       end
     else
       patient_restriction
@@ -89,8 +96,10 @@ class PhysiciansController < ApplicationController
         @ph = Physician.find(params[:physician_id])
       if (@ph.update_attributes(params[:physician]))
         redirect_to physician_patients_path(:physician_id => @ph.id), :notice => "Your password update was successful."
+        return false
       else
         redirect_to :action => 'ph_password_edit'
+        return false
       end
     else
       patient_restriction
@@ -107,6 +116,7 @@ class PhysiciansController < ApplicationController
       @physician.email = @physician.email + "(BIVOLA_archive_BIVOLA)"
       @physician.save(:validate => false)
       redirect_to admin_path
+      return false
     else
       patient_restriction
     end
@@ -140,6 +150,7 @@ class PhysiciansController < ApplicationController
     @pt.archive = nil
     @pt.save(:validate => false)
     redirect_to physician_patients_path(@ph, @pt)
+    return false
     else
       patient_restriction
     end

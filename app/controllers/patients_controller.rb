@@ -22,8 +22,10 @@ class PatientsController < ApplicationController
       @patient.phone_number = ""
       if @patient.save(:validate => false)
         redirect_to pt_archive_index_path(:physician_id => @ph.id)
+        return false
       else
         redirect_to physician_patients_path(@ph)
+        return false
       end
     else
       patient_restriction
@@ -78,8 +80,10 @@ class PatientsController < ApplicationController
         if @patient.save
           session[:patient_start] = @patient.id
           redirect_to sms_handler_path
+          return false
         else
           render :action => "new"
+          return false
         end
       else
         patient_restriction
@@ -96,8 +100,10 @@ class PatientsController < ApplicationController
 
         if @patient.update_attributes(params[:patient])
           redirect_to physician_patient_path
+          return false
         else
           render :action =>"edit"
+          return false
         end
       else
         patient_restriction
@@ -111,6 +117,7 @@ class PatientsController < ApplicationController
         @ph = Physician.find(params[:physician_id])
         @patient.destroy
         redirect_to physician_patients_url(@ph)
+        return false
       else
         patient_restriction
       end
@@ -122,6 +129,7 @@ class PatientsController < ApplicationController
         @ph = Physician.find(@patient.physician_id)  
       else
         redirect_to home_page_path
+        return false
       end
     end
     
@@ -134,11 +142,14 @@ class PatientsController < ApplicationController
         
         if @patient.update_attributes(params[:patient])
           redirect_to physician_patient_path(@ph, @patient), :notice => "The patient's password was successfully reset"
+          return false
         else
           render :action =>"admin_pt_password_edit"
+          return false
         end
       else
         redirect_to home_page_path
+        return false
       end
     end
     
@@ -176,8 +187,10 @@ class PatientsController < ApplicationController
         @patient.save(:validate => false)
         if @patient.update_attributes(params[:patient])
           redirect_to pt_show_path(params[:patient_id])
+          return false
         else
           render :action => "patient_edit_limited"
+          return false
         end
       else
         patient_restriction

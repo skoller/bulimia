@@ -48,8 +48,10 @@ class LogEntriesController < ApplicationController
     @log_entry = @patient.log_entries.build(params[:log_entry])
     if @log_entry.save
       redirect_to physician_patient_log_entry_path(@ph, @patient, @log_entry), notice: 'Log Entry was successfully created.'
+      return false
     else
       render action:'new'
+      return false
     end
   end
 
@@ -60,8 +62,10 @@ class LogEntriesController < ApplicationController
     
     if @log_entry.update_attributes(params[:log_entry])
       redirect_to physician_patient_log_entry_path(@ph, @patient, @log_entry), notice: 'Log entry was successfully updated.'
+      return false
     else
       render action: "edit"
+      return false
     end
   end
 
@@ -71,6 +75,7 @@ class LogEntriesController < ApplicationController
     @log_entry = @patient.log_entries.find(params[:id])
     @log_entry.destroy
     redirect_to physician_patient_log_entries_path(@ph, @patient)
+    return false
   end
   
   

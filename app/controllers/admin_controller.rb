@@ -25,6 +25,7 @@ class AdminController < ApplicationController
     @patient.activity_history = @patient.activity_history + "  >>>>>> Reactivated (billing started) and unarchived by Admin on #{DateTime.now.to_time.strftime('%c')}"
     @patient.save(:validate => false)
     redirect_to active_patients_path
+    return false
   end
   
   def deactivate_and_archive_patient
@@ -33,6 +34,7 @@ class AdminController < ApplicationController
     @patient.activity_history = @patient.activity_history + "  >>>>>> Deactivated (billing stopped) and archived by Admin on #{DateTime.now.to_time.strftime('%c')}"
     @patient.save(:validate => false)
     redirect_to archived_patients_path
+    return false
   end
   
   def archive_a_physician
@@ -47,6 +49,7 @@ class AdminController < ApplicationController
     @ph.save(:validate => false) 
     @phys = (session[:physician_id]).to_s
     redirect_to archived_physicians_path(@phys) 
+    return false
   end
   
   def unarchive_a_physician
@@ -61,6 +64,7 @@ class AdminController < ApplicationController
     @ph.save(:validate => false)
     @phys = (session[:physician_id]).to_s
     redirect_to admin_path(@phys) 
+    return false
   end
   
 end
