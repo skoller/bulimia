@@ -4,7 +4,7 @@ class LogPdf < Prawn::Document
       super(top_margin: 40)
         @patient = patient
         patient_info 
-        entries
+        make_it
        
     end
     
@@ -13,7 +13,7 @@ class LogPdf < Prawn::Document
       text "Date of Birth: #{@patient.dob}", size: 18, style: :bold
     end
     
-    def entries
+    def entries(entry_rows)
         move_down 20
         
         table entry_rows do
@@ -34,12 +34,27 @@ class LogPdf < Prawn::Document
         end
       end
       
-      def entry_rows
-        [["Day", "Time", "Where", "Food", "Binge", "Vomit", "Lax", "Personal Notes"]] +
-        @patient.log_entries.map do |entry|
-          [entry.day_web_display, entry.time_web_display, entry.location, entry.food, b_v_l(entry.binge), b_v_l(entry.vomit), b_v_l(entry.laxative), entry.personal_notes]
-        end
-      end
+   
+    def make_it
+       x = [["Day", "Time", "Where", "Food", "Binge", "Vomit", "Lax", "Personal Notes"]]
+       ordered_log_entries = @patient.log_entries.order("date ASC")
+       ordered_log_entries.each do |e|
+         if @previous_day == nil
+           single_page = x + (x.map { |e| [e.day_web_display, e.time_web_display, e.location, e.food, b_v_l(e.binge), b_v_l(e.vomit), b_v_l(e.laxative), e.personal_notes] })
+           @previous_day = e.date.change(:hour => 0)
+         elsif (e.date.change(:hour => 0) == @previous_day)
+           single_page + (x.map { |e| [e.day_web_display, e.time_web_display, e.location, e.food, b_v_l(e.binge), b_v_l(e.vomit), b_v_l(e.laxative), e.personal_notes] })
+           @previous_day = e.date.change(:hour => 0)
+         else
+           entries(single_page)
+           LogPdf.start_new_page
+           single_page = x + (x.map { |e| [e.day_web_display, e.time_web_display, e.location, e.food, b_v_l(e.binge), b_v_l(e.vomit), b_v_l(e.laxative), e.personal_notes] })
+           @previous_day = e.date.change(:hour => 0)
+         end
+       end
+    end
+    
+    
 
       def b_v_l(val)
         if val

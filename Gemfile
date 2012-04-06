@@ -5,7 +5,7 @@ gem 'jquery-rails'
 gem 'heroku'
 gem 'prawn'
 gem 'bcrypt-ruby'
-
+gem 'client_side_validations'
 
 
 # Gems used only for assets and not required

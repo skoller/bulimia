@@ -12,17 +12,12 @@
     </div>
   <% end %>
 
-  <div class="control-group">
-    <%= f.label :day, :class => "control-label" %>
-    <div class= "controls">
-      <%= f.number_field :day %>
-    </div>
-  </div>
+  
 
   <div class="control-group">
-    <%= f.label :time, :class => "control-label" %>
+    <%= f.label :date, :class => "control-label" %>
     <div class= "controls">
-      <%= f.text_field :time %>
+      <%= f.hidden_field :date, :value => 5.days.ago %>
     </div>
   </div>
 

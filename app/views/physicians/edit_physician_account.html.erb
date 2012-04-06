@@ -1,4 +1,4 @@
-<%= form_for @ph, :html => {:class => "form-horizontal"} do |f| %>
+<%= form_for @ph, :validate => true, :html => {:class => "form-horizontal"} do |f| %>
   <legend>Edit Account</legend>
   <% if @ph.errors.any? %>
     <div id="error_explanation">

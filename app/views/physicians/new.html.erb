@@ -1,16 +1,19 @@
 <h1>Physician Sign Up</h1>
 
-<%= form_for @physician do |f| %>
-  <% if @physician.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% for message in @physician.errors.full_messages %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for @physician, :validate => true do |f| %>
+  
+    <% if @physician.errors.any? %>
+	    <div id="error_explanation">
+	      <h2><%= pluralize(@physician.errors.count, "error") %> prohibited your changes from being saved:</h2>
+
+	      <ul>
+	      <% @physician.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+  
   <p>
     <%= f.label :email %><br />
     <%= f.text_field :email %>

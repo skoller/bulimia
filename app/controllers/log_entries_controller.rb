@@ -19,7 +19,8 @@ class LogEntriesController < ApplicationController
           send_data pdf.render, filename: "#{@patient.last_name.capitalize}#{@patient.first_name.split(//)[0].capitalize}_#{Date.today}_EatingLog.pdf",
                                 type: "application/pdf",
                                 disposition: "inline"
-                                
+                    
+                               
         end
     end
   end
