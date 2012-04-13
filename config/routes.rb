@@ -57,7 +57,7 @@ Bulimia::Application.routes.draw do
   match "archive_a_physician/:physician_id" => "admin#archive_a_physician", :as => "archive_a_physician"
   match "unarchive_a_physician/:physician_id" => "admin#unarchive_a_physician", :as => "unarchive_a_physician"
   
-  
+
     
   
   # The priority is based upon order of creation:
