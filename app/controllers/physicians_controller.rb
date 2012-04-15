@@ -2,7 +2,6 @@ class PhysiciansController < ApplicationController
 
   before_filter :authenticate_user, :except => [:new, :create]
   
-  
   def new
     @physician = Physician.new
     @no_session_format = true
@@ -21,7 +20,7 @@ class PhysiciansController < ApplicationController
     end
   end
 
-  
+
   def physician_account
     if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
       if (session[:physician_id] == 1)
@@ -63,17 +62,6 @@ class PhysiciansController < ApplicationController
     #     redirect_to :action => 'edit_physician_account'
     #     return false
     #   end
-
-  def signup_part2
-    @ph = Physician.find(params[:id])
-    if @ph.update_attributes(params[:physician])
-      redirect_to welcome_ph_instructions_path(:physician_id => @ph.id), :notice => "Your information saved."
-      return false
-    else
-      redirect_to :action => 'physician_additional_information'
-      return false
-    end
-  end
 
   def update
     if (session[:physician_id].to_s && (params[:id] == session[:physician_id].to_s)) || (session[:physician_id] == 1)
@@ -147,8 +135,19 @@ class PhysiciansController < ApplicationController
     @ph = Physician.find(params[:physician_id])
   end
   
+  def signup_part2
+    @ph = Physician.find(params[:id])
+    if @ph.update_attributes(params[:physician])
+      redirect_to welcome_ph_instructions_path(:physician_id => @ph.id), :notice => "Your information saved."
+      return false
+    else
+      redirect_to :action => 'physician_additional_information'
+      return false
+    end
+  end
+
   def physician_additional_info
-    if ((session[:physician_id]).to_s && ((params[:id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
+    if (session[:physician_id].to_s && (params[:id] == session[:physician_id].to_s)) || (session[:physician_id] == 1)
       @ph = Physician.find(params[:id])
     else
       patient_restriction

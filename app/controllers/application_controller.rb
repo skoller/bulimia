@@ -11,20 +11,20 @@ class ApplicationController < ActionController::Base
   
   
   def patient_restriction
-  if session[:patient_id]
-     pt_id = session[:patient_id]
-     @pt = Patient.find(pt_id)
-     @ph = Physician.find(@pt.physician_id)
-     redirect_to physician_patient_log_entries_path(@ph, @pt), :notice => "That page has restricted access."
-    return false
-   else
+    if session[:patient_id]
+      pt_id = session[:patient_id]
+      @pt = Patient.find(pt_id)
+      @ph = Physician.find(@pt.physician_id)
+      redirect_to physician_patient_log_entries_path(@ph, @pt), :notice => "That page has restricted access."
+      return false
+    else
      redirect_to home_page_path
      return false
-   end
- end
+    end
+  end
  
  def physician_restriction
- if session[:physician_id]
+  if session[:physician_id]
     ph_id = session[:physician_id]
     @ph = Physician.find(ph_id)
     redirect_to physician_patient_log_entries_path(@ph), :notice => "That page has restricted access."
@@ -35,8 +35,6 @@ class ApplicationController < ActionController::Base
   end
 end
   
-  
-
   private
 
   def current_physician
