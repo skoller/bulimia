@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(:version => 20120220081407) do
     t.boolean  "laxative"
     t.text     "personal_notes"
     t.string   "time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "patient_id"
     t.datetime "date"
     t.integer  "convo_handler_id"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(:version => 20120220081407) do
     t.string   "dob"
     t.string   "sex"
     t.float    "diagnosis"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "phone_number"
     t.integer  "convo_handler_id"
     t.integer  "physician_id"

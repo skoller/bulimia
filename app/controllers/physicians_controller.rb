@@ -50,33 +50,38 @@ class PhysiciansController < ApplicationController
     end
   end
 
+    # if (session[:physician_id].to_s && (params[:physician_id] == session[:physician_id].to_s)) || (session[:physician_id] == 1)
+    #   if session[:physician_id] == 1
+    #     @ph = Physician.find(params[:id])
+    #   else
+    #     @ph = Physician.find(params[:physician_id])
+    #   end
+    #   if (@ph.update_attributes(params[:physician]))
+    #     redirect_to physician_account_path(:physician_id => @ph.id), :notice => "Your updates were successful."
+    #     return false
+    #   else
+    #     redirect_to :action => 'edit_physician_account'
+    #     return false
+    #   end
+
   def update
-    if ((session[:physician_id]).to_s && ((params[:physician_id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
-      if session[:physician_id] == 1
-        @ph = Physician.find(params[:id])
-      else
-        @ph = Physician.find(params[:physician_id])
-      end
-      if (@ph.update_attributes(params[:physician]))
-        redirect_to physician_account_path(:physician_id => @ph.id), :notice => "Your updates were successful."
-        return false
-      else
-        redirect_to :action => 'edit_physician_account'
-        return false
-      end
-    elsif ((session[:physician_id]).to_s && ((params[:id]) == (session[:physician_id]).to_s)) || (session[:physician_id] == 1)
+    if (session[:physician_id].to_s && (params[:id] == session[:physician_id].to_s)) || (session[:physician_id] == 1)
       @ph = Physician.find(params[:id])
       if @ph.first_name == nil
-        (@ph.update_attributes(params[:physician]))
+        @ph.update_attributes(params[:physician])
         redirect_to welcome_ph_instructions_path(:physician_id => @ph.id)
         return false
       elsif @ph.first_name
-        (@ph.update_attributes(params[:physician]))
-        redirect_to physician_patients_path(@ph)
-        return false
-      else
-          redirect_to :action => 'physician_additional_information'
+        if @ph.update_attributes(params[:physician])
+          redirect_to physician_account_path(:physician_id => @ph.id), :notice => "Your updates were successful."
           return false
+        else
+          redirect_to :action => 'edit_physician_account'
+          return false
+        end
+      else
+        redirect_to :action => 'physician_additional_information'
+        return false
       end
     else
       patient_restriction

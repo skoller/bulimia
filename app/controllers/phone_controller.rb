@@ -3,8 +3,6 @@ class PhoneController < ApplicationController
   BASE_DIR = "phone/" 
 
   def sms_handler
-    
-    
     if session[:patient_start]
       @patient = Patient.where(:id => (session[:patient_start]).to_s).first
       @ph = Physician.where(:id => @patient.physician_id).first
