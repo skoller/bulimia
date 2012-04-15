@@ -138,7 +138,7 @@ class PhysiciansController < ApplicationController
   def signup_part2
     @ph = Physician.find(params[:id])
     @ph.attributes = params[:physician]
-    if @ph.save(false)
+    if @ph.save(:validate => false)
       redirect_to welcome_ph_instructions_path(:physician_id => @ph.id), :notice => "Your information saved."
       return false
     else
