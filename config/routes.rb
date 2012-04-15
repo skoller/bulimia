@@ -7,6 +7,7 @@ Bulimia::Application.routes.draw do
     end
   end
   
+  match 'physician_signup_part2/:id(.:format)' => 'physicians#signup_part2'
   match "home_page" => "application#home_page", :as => "home_page"
   match "deactivate_pt_msg/:physician_id/:patient_id" => "physicians#deactivate_pt_message", :as => "deactivate_pt_message"
   match "deactivate_ph_msg/:physician_id" => "physicians#deactivate_ph_message", :as => "deactivate_ph_message"

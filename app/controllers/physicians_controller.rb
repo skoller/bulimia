@@ -64,6 +64,17 @@ class PhysiciansController < ApplicationController
     #     return false
     #   end
 
+  def signup_part2
+    @ph = Physician.find(params[:id])
+    if @ph.update_attributes(params[:physician])
+      redirect_to welcome_ph_instructions_path(:physician_id => @ph.id), :notice => "Your information saved."
+      return false
+    else
+      redirect_to :action => 'physician_additional_information'
+      return false
+    end
+  end
+
   def update
     if (session[:physician_id].to_s && (params[:id] == session[:physician_id].to_s)) || (session[:physician_id] == 1)
       @ph = Physician.find(params[:id])
