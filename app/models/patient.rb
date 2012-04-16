@@ -2,7 +2,18 @@ class Patient < ActiveRecord::Base
   attr_accessible :phone_number, :password, :password_confirmation, :first_name, :last_name, :dob, :sex, :diagnosis, :archive
   has_secure_password
   validates_presence_of :password, :on => :create
-
+  
+  validates_presence_of :first_name, :last_name
+  validates_presence_of :password, :on => :create
+  validates_length_of :password, :minimum => 6, :allow_blank => false, :on => :create
+  validates_confirmation_of :password, :on => :create 
+  validates_presence_of :phone_number, :length => { :is => 10 }
+  validates_presence_of :phone_number, :format => { :with => /^\d{10}$/, :message => "Must be 10 digits and contain no parathesis or dashes" }
+  validates_uniqueness_of :phone_number
+  validates_presence_of :sex, :on => :create
+  validates_presence_of :dob, :on => :create, :format => { :with => /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/, :message => "MM-DD-YYYY format required" }
+  validates_presence_of :diagnosis, :on => :create
+  
   has_many :log_entries
   has_one :convo_handler
   has_one :physician
