@@ -16,11 +16,15 @@ class SessionsController < ApplicationController
         session[:physician_id] = 1
         redirect_to admin_path(ph)
         return false
+      elsif (ph.email == 'dev@bvl.com') && ph.authenticate(params[:password]) && (ph.state == nil)
+          session[:physician_id] = 1
+          redirect_to physician_additional_info_path(:id => ph.id)
+          return false
       elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state
         session[:physician_id] = ph.id
         redirect_to physician_patients_path(ph)
         return false
-      elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state == nil
+      elsif (ph.email != 'dev@bvl.com') && ph.authenticate(params[:password]) && (ph.state == nil)
         session[:physician_id] = ph.id
         redirect_to physician_additional_info_path(:id => ph.id)
         return false
