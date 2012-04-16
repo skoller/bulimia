@@ -45,11 +45,11 @@ class AdminController < ApplicationController
       pt.archive = true
       pt.save(:validate => false)
     end
+    @ph.email = @physician.email + "_BVL_archive_BVL"
     @ph.archive = true
     @ph.arch_id = @ph.id.to_i - (2 * @ph.id.to_i)
-    @ph.save(:validate => false) 
-    @phys = (session[:physician_id]).to_s
-    redirect_to archived_physicians_path(@phys) 
+    @ph.save(:validate => false)  
+    redirect_to archived_physicians_path 
     return false
   end
   
@@ -61,11 +61,11 @@ class AdminController < ApplicationController
       pt.archive = nil
       pt.save(:validate => false)
     end
+    @ph.email = @ph.email.chomp("_BVL_archive_BVL")
     @ph.archive = nil
     @ph.arch_id = nil
     @ph.save(:validate => false)
-    @phys = (session[:physician_id]).to_s
-    redirect_to admin_path(@phys) 
+    redirect_to admin_path 
     return false
   end
   

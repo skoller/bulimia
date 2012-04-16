@@ -111,21 +111,6 @@ class PhysiciansController < ApplicationController
   end
 
 
-  def destroy_archive
-    if (session[:physician_id] == 1)
-      @physician = Physician.find(params[:id])
-      @physician.archive = true
-      @physician.arch_id = @physician.id
-      @physician.id = nil
-      @physician.email = @physician.email + "(BIVOLA_archive_BIVOLA)"
-      @physician.save(:validate => false)
-      redirect_to admin_path
-      return false
-    else
-      patient_restriction
-    end
-  end
-
   def deactivate_pt_message
     @ph = Physician.find(params[:physician_id])
     @pt = Patient.find(params[:patient_id])
