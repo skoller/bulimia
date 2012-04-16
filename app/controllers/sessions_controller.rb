@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
   def create_ph_session
     ph = Physician.where(:email => (params[:email])).first
     unless ph == nil
-      if (ph.email == 'dev@bvl.com') && ph.authenticate(params[:password])
+      if (ph.email == 'dev@bvl.com') && ph.authenticate(params[:password]) && ph.state
         session[:physician_id] = 1
         redirect_to admin_path(ph)
         return false
