@@ -4,7 +4,7 @@ class Physician < ActiveRecord::Base
     
     validates_presence_of :first_name, :last_name, :state, :specialty, :on => :update
     validates_presence_of :password, :on => :create
-    validates_length_of :password, :minimum => 6, :allow_blank => false
+    validates_length_of :password, :minimum => 6, :allow_blank => false, :on => :create
     validates_confirmation_of :password, :on => :create 
     validates_presence_of :email
     validates_uniqueness_of :email
@@ -12,6 +12,22 @@ class Physician < ActiveRecord::Base
     
     has_many :patients
     
+    # validates_presence_of :password, :if => :should_validate_password?
+    # validates_presence_of :country
+    # validates_presence_of :state, :if => :in_us?
+    # attr_accessor :updating_password
+
+    # def in_us?
+    #   country == 'US'
+    # end
+
+    # def should_validate_password?
+    #   updating_password || new_record?
+    # end
+
+    # # in controller
+    # @user.updating_password = true
+    # @user.save
     
     
     def full_name
