@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 source 'http://gemcutter.org'
 
-gem 'rails', "~>3.2"
+gem 'rails'
 gem 'jquery-rails'
 gem 'heroku'
 gem 'prawn'
