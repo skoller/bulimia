@@ -2,7 +2,7 @@
 
 <%= form_for @ph, :validate => true, 
                   :method => :put, 
-                  :url => physician_signup_part2_path + "/#{@ph.id}", 
+                  :url => physician_signup_part2_path(:id => @ph.id), 
                   :html => {:class => "form-horizontal" } do |f| %>
   <legend>Physician</legend>
   <% if @ph.errors.any? %>
